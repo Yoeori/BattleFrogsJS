@@ -1,0 +1,65 @@
+<!--
+The game was originally made by Mojang AB (@dinnerbone, @PoiPoiChen and @KrisJelbring)
+The game was ported from Java to Javascript by @Yoeori (some dutch guy)
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BattleToads Javascript Port</title>
+    <style>
+	body {
+		margin: 0;
+		padding: 0;
+		background: #CdCdCd;
+	}
+	.GameCanvas {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -360px;
+		margin-left: -640px;
+	}
+	.footer {
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
+	}
+	</style>
+</head>
+
+<body onLoad="init()">
+    <canvas height="720px" width="1280px" class="GameCanvas" id="GameCanvas">
+    Sorry your browser does not suppport the canvas object!<br />
+    Please upgrade to a newer browser like google chrome or firefox
+    </canvas>
+    <div class="footer">
+    	This is a port of BattleFrogs made in the Mojang AB charity event: Mojam<br />
+		FPS: <span id="fps"></span>&nbsp;&nbsp;&nbsp;&nbsp;Ticks: <span id="Tick"></span>
+    </div>
+</body>
+<script>var GameFPS = 60;</script>
+
+<!-- Main file -->
+<script type="text/javascript" src="js/Battletoads.js"></script>
+
+<!-- System files (not in Java version) -->
+<script type="text/javascript" src="js/sys/classSys.js"></script>
+<script type="text/javascript" src="js/sys/keyboard.js"></script>
+<script type="text/javascript" src="js/sys/preloadimages.js"></script>
+
+<script type="text/javascript" src="js/collision.js"></script>
+<script type="text/javascript" src="js/sound/sound.js"></script>
+<script type="text/javascript" src="js/renderBackground.js"></script>
+<script type="text/javascript" src="js/entitys/entity.js"></script>
+<script type="text/javascript" src="js/entitys/player.js"></script>
+<script type="text/javascript" src="js/entitys/frogPirate.js"></script>
+<script type="text/javascript" src="js/entitys/projectiles/projectile.js"></script>
+<script type="text/javascript" src="js/entitys/projectiles/missile.js"></script>
+<script type="text/javascript" src="js/entitys/pickups/Pickup.js"></script>
+<script type="text/javascript" src="js/entitys/pickups/Croissant.js"></script>
+<script type="text/javascript" src="js/entitys/pickups/Weapon.js"></script>
+<script type="text/javascript" src="js/entitys/playerbullit.js"></script>
+<script type="text/javascript" src="js/screen/gui.js"></script>
+
+</html>
