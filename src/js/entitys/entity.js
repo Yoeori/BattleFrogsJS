@@ -19,25 +19,24 @@ var Entity = Class.extend({
 	friction: 0.35,
 	jumpSpeed: 22.5,
 	gravity: 0.75,
+	team: "",
+	image: new Image(),
+	frame: 0,
+	team: 0,
+	height : 0,
+	width : 0,
+	currentanimation : 0,
+	currentframe : 0,
+	
+	FACING_LEFT : 0,
+    FACING_RIGHT : 1,
+	facing: 0,
 	
 	//Health and stuff
 	fullHealth: 100,
 	currentHealth: 100,
 	damageModifier: 1,
 	invulnerable: false,
-	team: "",
-	image: new Image(),
-	frame: 0,
-	team: 0,
-	
-	FACING_LEFT : 0,
-    FACING_RIGHT : 1,
-	facing: 0,
-	
-	height : 0,
-	width : 0,
-	currentanimation : 0,
-	currentframe : 0,
 	
 	inversegravity : false,
 	
@@ -195,5 +194,10 @@ var Entity = Class.extend({
 	onLanding : function(){},
 	updateAnimation : function(){},
 	onCollision : function(collidedHorizontally,collidedVertically){},
+	
+	getCollisionHitbox : function(hitbox) {
+		return hitbox;
+	},
+	
 	ignoreCollision : false
 });
