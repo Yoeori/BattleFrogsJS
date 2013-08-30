@@ -1,8 +1,8 @@
 var canvas = document.getElementById('GameCanvas');
 var DisplayCTX = canvas.getContext('2d');
-var FPS = GameFPS;
+var FPS = 60;
 var Tick = 0;
-var savedFPS = GameFPS;
+var savedFPS = 60;
 var paused = false;
 var Debug = false;
 var DeltaTime = Date.now();
@@ -21,12 +21,7 @@ window.onblur = function() { paused = true; };
 
 function init() {
 	function start() {
-		GameRenderer = setInterval(function() {
-			if(!paused) {
-				render();
-				FPS++;
-			}
-		},1000/GameFPS);
+		GameRenderer = requestAnimationFrame(render);
 		GameUpdater = setInterval(function() {
 			if(!paused) {
 				update();
@@ -49,14 +44,15 @@ function init() {
 			EntityList[1] = new EntityPickupCroissant(new Array(10616, 449+48));
 			EntityList[2] = new EntityPickupWeapon(new Array(14000, 430+36));
 			GUIList.push(new guiText("Use WASD/Arrow keys to move and jump. Yay"));
-			//new Image("graphics/croissant.png"), startingPoint, 52, 48, Team.THE_FRENCH
 			start();
 			clearInterval(gameStarter);
 		}
 	},1000/60);
 }
 function render() {
-	
+	if(!paused) {
+		FPS++;
+	}
 	renderBackground();
 	for(var i= EntityList.length; i >= 0; i--) {
 		if(EntityList[i] != null) {
@@ -71,6 +67,8 @@ function render() {
 		GUIList[i].render();
 	}
 	lastDelta = DeltaTime;
+	
+	GameRenderer = requestAnimationFrame(render);
 }
 function update() {
 	DeltaTime += 15;
@@ -103,7 +101,7 @@ function ToggleDebug() {
 	Debug = !Debug;
 }
 function restartGame() {
-	clearInterval(GameRenderer);
+	cancelAnimationFrame(GameRenderer);
 	clearInterval(GameUpdater);
 	clearInterval(GameFPStick);
 	EntityList.length = 0;

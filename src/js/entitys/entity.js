@@ -172,6 +172,91 @@ var Entity = Class.extend({
 			this.onCollision(collidedHorizontally,collidedVertically);
 	},
 	
+	onLanding : function(){},
+	updateAnimation : function(){},
+	onCollision : function(collidedHorizontally,collidedVertically){},
+		
+	getCollisionHitbox : function(hitbox) {
+		return hitbox;
+	},
+	
+	isIntersecting : function(Entity otherEntity) {
+        return this.width > otherEntity.PosX && this.PosX < (otherEntity.width+otherEntity.PosX) && this.height > (otherEntity.PosY-otherEntity.height) && this.PosY < otherEntity.PosY;
+    },
+	
+	DeltaX : function(otherEntity) {
+		
+		var rightAfterLeft = (this.PosX+this.width) >= otherEntity.PosX;
+        var rightBeforeRight = (this.PosX+this.width) <= (otherEntity.PosX+otherEntity.width);
+        var rightIntersects = rightAfterLeft && rightBeforeRight;
+
+        var leftBeforeRight = this.PosX <= (otherEntity.PosX+otherEntity.width);
+        var leftBeforeLeft = this.PosX >= otherEntity.PosX;
+        var leftIntersects = leftBeforeRight && leftBeforeLeft;
+
+        var contained = leftBeforeLeft && rightBeforeRight;
+        if (rightIntersects || leftIntersects || contained) {
+            return 0;
+        }
+
+        if ((this.PosX+this.width) < otherEntity.PosX) {
+            return Math.abs(otherEntity.PosX - (this.PosX+this.width));
+        }
+
+        return Math.abs(this.PosX - (otherEntity.PosX+otherEntity.width));
+	},
+	
+	DeltaYEnt : function(DeltaYEntentity) {
+		this.DeltaY(DeltaYEntentity.getPosition());
+	},
+	
+	DeltaY : function(DeltaYRect) {
+		var topBelowTop = (this.PosY-this.height) >= (DeltaYRect[1]-DeltaYRect[3]);
+        var topAboveBottom = (this.PosY-this.height) <= DeltaYRect[1];
+        var topIntersects = topBelowTop && topAboveBottom;
+		
+		var bottomBelowTop = this.PosY >= (DeltaYRect[1]-DeltaYRect[3]);
+        var bottomAboveBottom = this.PosY <= DeltaYRect[1];
+        var bottomIntersects = bottomBelowTop && bottomAboveBottom;
+		
+		var contained = topBelowTop && bottomAboveBottom;
+		if (topIntersects || bottomIntersects || contained) {
+            return 0;
+        }
+		
+		if ((this.PosY-this.height) < DeltaYRect[1]) {
+            return Math.abs(DeltaYRect[1] - (this.PosY-this.height));
+        }
+
+        return Math.abs(this.PosY - (DeltaYRect[1]-DeltaYRect[3]));
+		
+	},
+	
+	canContinueMoving : function() {
+		newX = this.PosX + this.velocityX;
+		return !checkCollision(newX, this.PosX, this.width, this.height, false);
+	},
+	
+	invertHorizontalSpeed : function() {
+		this.horizontalSpeed *= -1;
+	},
+	
+	isMovingRight : function() {
+        return this.horizontalSpeed > 1;
+    },
+	
+	isMovingLeft : function() {
+        return this.horizontalSpeed < 1;
+    },
+	
+	moveLeft : function() {
+		this.horizontalSpeed = -Math.abs(this.horizontalSpeed);
+	},
+	
+	moveRight : function() {
+		this.horizontalSpeed = Math.abs(this.horizontalSpeed);
+	},
+	
 	increaseHealth : function(amount) {
 		console.log("Increased health: "+amount);
 		this.currentHealth += amount;
@@ -189,15 +274,29 @@ var Entity = Class.extend({
             	this.die();
         	}
 		}
-	},	
-	
-	onLanding : function(){},
-	updateAnimation : function(){},
-	onCollision : function(collidedHorizontally,collidedVertically){},
-	
-	getCollisionHitbox : function(hitbox) {
-		return hitbox;
 	},
+	
+	setFullHealth : function(amount) {
+		this.fullHealth = amount;
+		if (this.currentHealth > this.fullHealth) {
+            this.currentHealth = this.fullHealth;
+        }
+	},
+	
+	getPosition : function() {
+		return new Array(this.PosX,this.PosY,this.width,this.height);
+	},
+	
+	ignoreCollision : function() {
+		return false;
+	},
+	
+	radiate : function(reactor,radiation) {
+		
+	},
+	
+	onObstacleCollision : function(obstacle) {
+    },
 	
 	ignoreCollision : false
 });
