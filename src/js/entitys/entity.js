@@ -180,7 +180,7 @@ var Entity = Class.extend({
 		return hitbox;
 	},
 	
-	isIntersecting : function(Entity otherEntity) {
+	isIntersecting : function(otherEntity) {
         return this.width > otherEntity.PosX && this.PosX < (otherEntity.width+otherEntity.PosX) && this.height > (otherEntity.PosY-otherEntity.height) && this.PosY < otherEntity.PosY;
     },
 	
