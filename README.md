@@ -9,7 +9,7 @@ this is a port from Java to Javascript using a 'Simple JavaScript Inheritance' s
 ### Quickstart
 
 copy the src folder to your folders and it in a webbrowser<br />
-Or: http://yoeori.nl/battleFrogs/ (Arguments: fps, width)
+Or: http://yoeori.nl/battleFrogs/ (Arguments: width)
 
 ### Todo
 
