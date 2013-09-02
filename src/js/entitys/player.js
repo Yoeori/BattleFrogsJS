@@ -2,10 +2,10 @@ var EntityPlayer = Entity.extend({
 	
 	//Anim
 	ANIMATION_TYPE_RUN : 0,
-    ANIMATION_TYPE_JUMP : 1,
-    ANIMATION_TYPE_IDLE : 2,
-    ANIMATION_TYPE_WALK : 3,
-    ANIMATION_TYPE_ATTACK : 4,
+	ANIMATION_TYPE_JUMP : 1,
+	ANIMATION_TYPE_IDLE : 2,
+	ANIMATION_TYPE_WALK : 3,
+	ANIMATION_TYPE_ATTACK : 4,
 	ANIMATION_COUNT : 5,
 	animations : new Array(),
 	animType : 2,
@@ -27,7 +27,7 @@ var EntityPlayer = Entity.extend({
 		this._super(sml["player"],new Array(x,y),152,195,Team.THE_FRENCH);
 		this.horizontalSpeed = 8;
 		this.fullHealth = 200;
-        this.currentHealth = this.fullHealth;
+		this.currentHealth = this.fullHealth;
 		
 		for(i = 0; i < this.ANIMATION_COUNT; i++) {
 			var animationNew = new Animation(0,this.animate[i],i,this.animationframerate[i]);
@@ -45,10 +45,10 @@ var EntityPlayer = Entity.extend({
 		var cycledAttack = false;
 		
 		if (this.isAttacking && attackDelta >= 581) {
-            this.isAttacking = false;
+			this.isAttacking = false;
 			this.width = 152;
-            cycledAttack = true;
-        }
+			cycledAttack = true;
+		}
 		
 		if(keyboard.space && !this.isAttacking && this.hasgun && !this.wasjumping) {
 			this.isAttacking = true;
@@ -76,11 +76,11 @@ var EntityPlayer = Entity.extend({
 		}
 		
 		if (this.wasAttacking && !this.isAttacking) {
-            this.animType = this.ANIMATION_TYPE_IDLE;
-            this.animations[this.animType].restart();
-        } else if (cycledAttack && this.isAttacking) {
-            this.animations[this.animType].restart();
-        }
+			this.animType = this.ANIMATION_TYPE_IDLE;
+			this.animations[this.animType].restart();
+		} else if (cycledAttack && this.isAttacking) {
+			this.animations[this.animType].restart();
+		}
 		
 		this.animations[this.animType].update(Delta);
 
@@ -98,15 +98,15 @@ var EntityPlayer = Entity.extend({
 			this.velocityY -= this.jumpSpeed;
 			this.jumping = true;
 			this.animType = this.ANIMATION_TYPE_JUMP;
-            this.animations[this.animType].start();
-            this.animations[this.animType].setCurrentFrame(0);
-            this.animations[this.animType].stopAt = this.animate[this.animType];
+			this.animations[this.animType].start();
+			this.animations[this.animType].setCurrentFrame(0);
+			this.animations[this.animType].stopAt = this.animate[this.animType];
 		}
 		
 		if (Date.now() - this.lastAutoHeal > 10000) {
-            this.increaseHealth(1);
-            this.lastAutoHeal = Date.now();
-        }
+			this.increaseHealth(1);
+			this.lastAutoHeal = Date.now();
+		}
 		
 		this.playWalkingSound();
 		
@@ -128,7 +128,7 @@ var EntityPlayer = Entity.extend({
 		} else if (this.wasMoving && !this.isMoving) {
 			this.animType = this.jumping ? this.ANIMATION_TYPE_JUMP : this.ANIMATION_TYPE_IDLE;
 			this.animations[this.animType].restart();
-		} else if (!this.wasMoving && this.isMoving) {
+		} else if (!this.wasMoving && this.isMoving && !this.jumping) {
 			this.animType = this.getWalkingAnimation();
 			this.animations[this.animType].restart();
         }
@@ -169,6 +169,12 @@ var EntityPlayer = Entity.extend({
 		} else {
 			return 1.35;
 		}
+	},
+	
+	radiate : function(reactor,radiation) {
+		if (Math.random() < radiation * 0.5) {
+            decreaseHealth(1);
+        }
 	},
 	
 	getFrame : function() {
