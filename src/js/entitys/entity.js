@@ -20,13 +20,13 @@ var Entity = Class.extend({
 	jumpSpeed: 22.5,
 	gravity: 0.75,
 	team: "",
-	image: new Image(),
+	animationSheet: new Image(),
+	currentanimation : 0,
+	currentframe : 0,
 	frame: 0,
 	team: 0,
 	height : 0,
 	width : 0,
-	currentanimation : 0,
-	currentframe : 0,
 	
 	FACING_LEFT : 0,
     FACING_RIGHT : 1,
@@ -41,7 +41,7 @@ var Entity = Class.extend({
 	inversegravity : false,
 	
 	init : function(image,startingPoint,width,height,team) {
-		this.image = image;
+		this.animationSheet = image;
 		this.team = team;
 		this.lifestart = new Date().getTime();
 		this.startX = startingPoint[0];
@@ -54,10 +54,13 @@ var Entity = Class.extend({
 	
 	render : function(Delta) {
 		this.frame++;
+		
+		var curFrame = this.getFrame();
+		
 		if(this.facing == this.FACING_LEFT) {
-			DisplayCTX.drawImage(this.image,								// Image
-								 this.width*this.currentframe,				// Start X on image
-								 this.height*this.currentanimation,			// Start Y on image
+			DisplayCTX.drawImage(this.animationSheet,						// Image
+								 this.width*curFrame[1],					// Start X on image
+								 this.height*curFrame[0],					// Start Y on image
 								 this.width, 								// Width in image to display
 								 this.height,								// Height in image to display
 								 this.PosX-BackgX, 							// Position X
@@ -68,9 +71,9 @@ var Entity = Class.extend({
 			DisplayCTX.save();
 			DisplayCTX.translate(this.width, 0);
 			DisplayCTX.scale(-1, 1);
-			DisplayCTX.drawImage(this.image, 
-								 this.width*this.currentframe, 
-								 this.height*this.currentanimation, 
+			DisplayCTX.drawImage(this.animationSheet, 
+								 this.width*curFrame[1], 
+								 this.height*curFrame[0], 
 								 this.width, 
 								 this.height, 
 								 -(this.PosX-BackgX), 
@@ -99,28 +102,18 @@ var Entity = Class.extend({
         }
 		
 		if(this.jumping) {
-			if(this.inversegravity) {
-				this.velocityY -= this.gravity;
-			} else {
-				this.velocityY += this.gravity;
-			}
+			this.velocityY += this.gravity;
 		} else {
 			this.velocityY = 0;
 		}
-	
-		//Collision check
-		var collidedHorizontally = false;
-        var collidedVertically = false;
-        var onFloor = false;
 		
 		newY = this.velocityY + this.PosY;
 		newX = this.velocityX + this.PosX;
 
-		if(newY > 672) {
-			newY = 672;
-			this.jumping = false;
-			this.velocityY = 0;
-		}
+		//Collision check
+		var collidedHorizontally = false;
+        var collidedVertically = false;
+        var onFloor = false;
 		
 		if(!checkCollision(newX, this.PosY, this.width, this.height, false)) {
 			this.PosX = newX;
@@ -139,21 +132,15 @@ var Entity = Class.extend({
 				this.PosY = newY;
 				if(checkCollision(this.PosX, newY+1, this.width, this.velocityY+10, true)) {
 					onFloor = true;
-					//collidedVertically = true;
 				}
 			} else {
-				onFloor = true;
 				collidedVertically = true;
 				this.velocityY = 0;
 			}
 		}
 		
 		this.wasjumping = this.jumping;
-		if(this.inversegravity) {
-			this.jumping = !this.flying && !onFloor;
-		} else {
-			this.jumping = !this.flying && this.PosY < 672 && !onFloor;
-		}
+		this.jumping = !this.flying && this.PosY < 672 && !onFloor;
 		this.wasMoving = this.isMoving;
 		this.isMoving = Math.abs(this.velocityX) > 0;
 		
@@ -175,6 +162,10 @@ var Entity = Class.extend({
 	onLanding : function(){},
 	updateAnimation : function(){},
 	onCollision : function(collidedHorizontally,collidedVertically){},
+	
+	getFrame : function() {
+		return new Array(0,0);	
+	},
 		
 	getCollisionHitbox : function(hitbox) {
 		return hitbox;
