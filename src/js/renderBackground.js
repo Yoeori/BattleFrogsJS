@@ -1,8 +1,7 @@
 var BackgX = 4500;
-var isLeftShooting = false;
 function renderBackground() {
 	var newBackgX = EntityList[0].PosX + 76 - (canvas.width/2);
-	if(isLeftShooting)
+	if(EntityList[0].isLeftShooting)
 		newBackgX += 48;
 	if(newBackgX < 0)
 		newBackgX = 0;

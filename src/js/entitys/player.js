@@ -14,6 +14,7 @@ var EntityPlayer = Entity.extend({
 	
 	hasgun: false,
 	lastAutoHeal: 0,
+	isLeftShooting: false,
 	
 	//Attack
 	ATTACK_MISSILE_TIME : 249,
@@ -61,6 +62,7 @@ var EntityPlayer = Entity.extend({
 			this.width = 200;
 			if(this.facing == this.FACING_LEFT && !cycledAttack) {
 				this.PosX -= 48;
+				this.isLeftShooting = true;
 			}
 			if(this.facing != this.FACING_LEFT) {
 				EntityList.push(new PlayerBullit(this.PosX+this.width-20-48,this.PosY-(this.height/2)+6,"right"));
@@ -73,6 +75,7 @@ var EntityPlayer = Entity.extend({
 		
 		if(this.wasAttacking && !this.isAttacking && this.facing == this.FACING_LEFT) {
 			this.PosX += 48;
+			this.isLeftShooting = false;
 		}
 		
 		if (this.wasAttacking && !this.isAttacking) {
