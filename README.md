@@ -20,7 +20,7 @@ Add AI<br />
 Refactor Battlefrogs.js, RenderBackground.js and collisions.js to World.js<br />
 Add camera<br />
 Add world<br />
-<strike>Finish entity abilities</strike><br />
+<del>Finish entity abilities</del><br />
 Add obstacles<br />
 Remove unnecessary code
 
