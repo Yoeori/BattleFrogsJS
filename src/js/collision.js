@@ -70,12 +70,23 @@ function checkCollision(x, y, width, height,platform) {
 
 //Entity collision check
 function getCollidingEntities(Point) {
-	Entitycheck = new Array(Point[0], Point[1]-Point[3], Point[0]+Point[2], Point[1])
-	Entitycolidedlist = new Array();
-	for(var i = 0; i < EntityList.length; i++) {
-		if(Entitycheck[2] > EntityList[i].PosX && Entitycheck[0] < (EntityList[i].width+EntityList[i].PosX) && Entitycheck[3] > (EntityList[i].PosY-EntityList[i].height) && Entitycheck[1] < EntityList[i].PosY) {
-			Entitycolidedlist.push(EntityList[i]);
+	if(Point.length == 4) {
+		Entitycheck = new Array(Point[0], Point[1]-Point[3], Point[0]+Point[2], Point[1])
+		Entitycolidedlist = new Array();
+		for(var i = 0; i < EntityList.length; i++) {
+			if(Entitycheck[2] > EntityList[i].PosX && Entitycheck[0] < (EntityList[i].width+EntityList[i].PosX) && Entitycheck[3] > (EntityList[i].PosY-EntityList[i].height) && Entitycheck[1] < EntityList[i].PosY) {
+				Entitycolidedlist.push(EntityList[i]);
+			}
 		}
+		return Entitycolidedlist;
+	} else if(Point.length == 3) {
+		Entitycolidedlist = [];
+		for(var i = 0; i < EntityList.length; i++) {
+			//Check circle collision
+		}
+		return Entitycolidedlist;
+	} else {
+		Entitycolidedlist = [];
+		return Entitycolidedlist;
 	}
-	return Entitycolidedlist;
 }

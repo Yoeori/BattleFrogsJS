@@ -148,3 +148,6 @@ Team = Object.freeze({
 	THE_FROG_PIRATES: 1,
 	SYSTEM: 2,
 });	
+function NextGaussian() {
+	return (Math.random()*2-1)+(Math.random()*2-1)+(Math.random()*2-1);
+}

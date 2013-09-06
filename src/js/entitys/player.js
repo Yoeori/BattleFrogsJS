@@ -7,10 +7,10 @@ var EntityPlayer = Entity.extend({
 	ANIMATION_TYPE_WALK : 3,
 	ANIMATION_TYPE_ATTACK : 4,
 	ANIMATION_COUNT : 5,
-	animations : new Array(),
+	animations : [],
 	animType : 2,
-	animate : new Array(5,2,2,7,6),
-	animationframerate : new Array(83,83,166,166,83),
+	animate : [5, 2, 2, 7, 6],
+	animationframerate : [83, 83, 166, 166, 83],
 	
 	hasgun: false,
 	lastAutoHeal: 0,
@@ -24,8 +24,8 @@ var EntityPlayer = Entity.extend({
 	hasAttackHappened : false,
 	
 	
-	init: function(x,y) {
-		this._super(sml["player"],new Array(x,y),152,195,Team.THE_FRENCH);
+	init: function(x, y) {
+		this._super(sml["player"], [x, y], 152, 195, Team.THE_FRENCH);
 		this.horizontalSpeed = 8;
 		this.fullHealth = 200;
 		this.currentHealth = this.fullHealth;

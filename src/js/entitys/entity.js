@@ -21,8 +21,6 @@ var Entity = Class.extend({
 	gravity: 0.75,
 	team: "",
 	animationSheet: new Image(),
-	currentanimation : 0,
-	currentframe : 0,
 	frame: 0,
 	team: 0,
 	height : 0,

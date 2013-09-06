@@ -1,5 +1,7 @@
 loadimages = new Array(	new Array("bg","bg"),
 						"starbackground",
+					   	"empty",
+					   	"radiation",
 						
 						//Doors
 						"BakeryWall_door_Broken",
@@ -21,6 +23,7 @@ loadimages = new Array(	new Array("bg","bg"),
 						//Player Missile
 						"missile",
 						"missile_flip",
+					   	"explosion_fromage",
 						
 						//Pickups
 						"weapon",
