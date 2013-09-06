@@ -19,7 +19,6 @@ var Entity = Class.extend({
 	friction: 0.35,
 	jumpSpeed: 22.5,
 	gravity: 0.75,
-	team: "",
 	animationSheet: new Image(),
 	frame: 0,
 	team: 0,

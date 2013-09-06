@@ -89,4 +89,29 @@ function getCollidingEntities(Point) {
 		Entitycolidedlist = [];
 		return Entitycolidedlist;
 	}
+<<<<<<< HEAD
+=======
+	return Entitycolidedlist;
+}
+function getNearestEntity(target,team) {
+	var result = 0;
+	var bestDist = 0;
+	for(var i = 0; i < EntityList.length; i++) {
+		if (EntityList[i].team != team) continue;
+		if (EntityList[i] instanceof EntityHumanoid || EntityList[i] instanceof EntityPlayer) {
+			var center = [(EntityList[i].PosX+EntityList[i].width/2),(EntityList[i].PosY-EntityList[i].height/2)];
+			var dist = distanceSquared(center,target);
+			if (result == 0 || dist < bestDist) {
+				bestDist = dist;
+				result = EntityList[i];
+			}
+		}
+	}
+	return result;
+}
+function distanceSquared(E1,E2) {
+	var dx = E1[0]-E2[0];
+	var dy = E1[1]-E2[1];
+	return (dx*dx)+(dy*dy);
+>>>>>>> f507cf12de6dc3f4f9b4c43d25cd64d14502cf0d
 }
