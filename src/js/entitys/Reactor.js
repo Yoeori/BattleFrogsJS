@@ -12,15 +12,16 @@ var EntityReactor = Entity.extend({
 	
 	update : function(Delta) {
 		if (this.frame % 5 == 0) {
-			var life = gameContainer.getTime() - lifeStart;
+			var life = new Date().getTime() - this.lifeStart;
 			this.radiationPulse = NextGaussian() * Math.sin(life) * 0.05;
 		}
 		
 		if(this.radiation > 0) {
 			var colEntitys = getCollidingEntities(this.getRadiationHitbox());
-            var max = this.image.width * 3 / 2;
-            var ourPos = [this.PosX+(this.image.width/2),this.PosY+(this.image.height/2)];
+            var max = this.radiationImage.width * 3 / 2;
+            var ourPos = [this.PosX,this.PosY];
             for(var i = 0; i < colEntitys.length; i++) {
+                if(colEntitys[i] == this) continue;
                 var entityPos = [colEntitys[i].PosX+(EntityList[i].width/2),colEntitys[i].PosY+(colEntitys[i].height/2)];
                 var dx = entityPos[0]-ourPos[0];
                 var dy = entityPos[1]-ourPos[1];
@@ -28,12 +29,30 @@ var EntityReactor = Entity.extend({
                 if(amount > max) amount = max;
                 amount /= max;
                 amount = 1 - amount;
-                colEntitys.radiate(this, amount);
+                colEntitys[i].radiate(this, amount);
             }
 		} else if(worldState.state == worldState.RADIATION_CLEARED) {
-            
-            
-            
+            var colEntitys = getCollidingEntities(this.getRadiationHitbox());
+            var foundPlayer = false;
+            for(var i = 0; i < colEntitys.length; i++) {
+                if(colEntitys[i] instanceof EntityPlayer) {
+                    foundPlayer = true;
+                    break;   
+                }
+            }
+            if (this.enteredConsoleTime > 0 && !foundPlayer) {
+                this.enteredConsoleTime = 0;
+            } else if (this.enteredConsoleTime >= 0 && foundPlayer) {
+                this.enteredConsoleTime += Delta;
+                if(this.enteredConsoleTime >= this.CONSOLE_ACTIVATION_TIME) {
+                    this.enteredConsoleTime = 0;
+                    if(hasPirates()) {
+                        worldState.set(worldState.ENGINES_ON);
+                    } else {
+                        worldState.set(worldState.WIN);
+                    }
+                }
+            }
         }
 	},
 	
@@ -46,11 +65,19 @@ var EntityReactor = Entity.extend({
 	},
     
     getRadiationHitbox : function() {
-        return [this.PosX+(this.image.width/2),this.PosY+(this.image.height/2),(this.image.width * this.radiation * 3 / 2)];
+        return [this.PosX,this.PosY,(this.radiationImage.width * this.radiation * 3 / 2)];
     },
 	
 	render : function(Delta) {
 		this._super(Delta);
+        var x = this.PosX;
+        var y = this.PosY;
+        DisplayCTX.save();
+        DisplayCTX.transform(x,y);
+        DisplayCTX.scale(this.radiation * 3 + this.radiationPulse, this.radiation * 3 + this.radiationPulse);
+        DisplayCTX.drawImage(this.radiationImage,-(this.radiationImage.width/2),(-(this.radiationImage.height/2))-BackgX);
+        DisplayCTX.restore();
+        
         
 	},
     

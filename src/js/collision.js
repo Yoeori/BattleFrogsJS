@@ -117,3 +117,11 @@ function distanceSquared(E1,E2) {
 	var dy = E1[1]-E2[1];
 	return (dx*dx)+(dy*dy);
 }
+function hasPirates() {
+    for(var i = 0; i < EntityList.length; i++) {
+        if(EntityList[i] instanceof Humanoid && EntityList[i].team == Team.THE_FROG_PIRATES) {
+            return true;
+        }
+    }
+    return false;
+}

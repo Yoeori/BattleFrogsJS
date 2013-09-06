@@ -43,6 +43,7 @@ function init() {
 			EntityList[0] = new EntityPlayer(6470,672);
 			EntityList[1] = new EntityPickupCroissant(new Array(10616, 449+48));
 			EntityList[2] = new EntityPickupWeapon(new Array(14000, 430+36));
+            //EntityList[3] = new EntityReactor([456, 307+sml["radiation"].height]);
 			GUIList.push(new guiText("Use WASD/Arrow keys to move and jump. Yay"));
 			start();
 			clearInterval(gameStarter);
