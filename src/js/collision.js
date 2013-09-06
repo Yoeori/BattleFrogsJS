@@ -83,15 +83,18 @@ function getCollidingEntities(Point) {
 		Entitycolidedlist = [];
 		for(var i = 0; i < EntityList.length; i++) {
 			//Check circle collision
+            var dx = Point[0]-(EntityList[i].PosX+(EntityList[i].width/2));
+            var dy = Point[1]-(EntityList[i].PosX-(EntityList[i].height/2))
+            var distance = Math.sqrt((dx*dx)+(dy*dy));
+            if(distance >= Point[2]) {
+                Entitycolidedlist.push(EntityList[i]);
+            }
 		}
 		return Entitycolidedlist;
 	} else {
 		Entitycolidedlist = [];
 		return Entitycolidedlist;
 	}
-<<<<<<< HEAD
-=======
-	return Entitycolidedlist;
 }
 function getNearestEntity(target,team) {
 	var result = 0;
@@ -113,5 +116,4 @@ function distanceSquared(E1,E2) {
 	var dx = E1[0]-E2[0];
 	var dy = E1[1]-E2[1];
 	return (dx*dx)+(dy*dy);
->>>>>>> f507cf12de6dc3f4f9b4c43d25cd64d14502cf0d
 }
