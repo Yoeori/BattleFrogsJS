@@ -11,10 +11,8 @@ var EntityReactor = Entity.extend({
 	},
 	
 	update : function(Delta) {
-		if (this.frame % 5 == 0) {
-			var life = new Date().getTime() - this.lifeStart;
-			this.radiationPulse = NextGaussian() * Math.sin(life) * 0.05;
-		}
+		var life = new Date().getTime() - this.lifeStart;
+		this.radiationPulse = NextGaussian() * Math.sin(life) * 0.05;
 		
 		if(this.radiation > 0) {
 			var colEntitys = getCollidingEntities(this.getRadiationHitbox());
@@ -69,11 +67,10 @@ var EntityReactor = Entity.extend({
     },
 	
 	render : function(Delta) {
-		this._super(Delta);
         var x = this.PosX;
         var y = this.PosY;
         DisplayCTX.save();
-        DisplayCTX.transform(x,y);
+        DisplayCTX.translate(x,y);
         DisplayCTX.scale(this.radiation * 3 + this.radiationPulse, this.radiation * 3 + this.radiationPulse);
         DisplayCTX.drawImage(this.radiationImage,-(this.radiationImage.width/2),(-(this.radiationImage.height/2))-BackgX);
         DisplayCTX.restore();

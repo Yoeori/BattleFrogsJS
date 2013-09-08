@@ -54,6 +54,8 @@ document.documentElement.onkeydown = function(e) {
 	} else if(e){
 		keycode = e.which;
 	}
+	if(KeySequenceReader)
+		KeySequenceReader.appendChar(keycode);
 	
 	switch (keycode){
 		case 13:

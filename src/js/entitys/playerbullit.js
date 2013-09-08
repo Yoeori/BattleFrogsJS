@@ -41,6 +41,11 @@
 		}
 	}
 	
+	this.radiate = function() {
+		
+		
+	}
+	
 	this.update = function() {
 		if((new Date().getTime())-this.spawntime >= 5000) {
 			this.kill();

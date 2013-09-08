@@ -176,7 +176,7 @@ var EntityPlayer = Entity.extend({
 	
 	radiate : function(reactor,radiation) {
 		if (Math.random() < radiation * 0.5) {
-            decreaseHealth(1);
+            this.decreaseHealth(1);
         }
 	},
 	
