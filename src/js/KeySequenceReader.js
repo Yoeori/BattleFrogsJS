@@ -4,7 +4,6 @@ var KeySequenceReader = {
 	currentSequence : "",
 	
 	appendChar : function(e) {
-		console.log(String.fromCharCode(e).toLowerCase());
 		this.currentSequence = this.currentSequence+String.fromCharCode(e).toLowerCase();
 		var matchingSequence = this.getFullyMatchingSequence();
 		if(matchingSequence != 0) {
@@ -35,7 +34,6 @@ var KeySequenceReader = {
 		}
 		return false;
 	},
-	// if(foo.indexOf("something") === 0)
 	
 	Sequence : Class.extend({
 		

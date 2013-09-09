@@ -33,7 +33,6 @@ var EntityPlayer = Entity.extend({
 		for(i = 0; i < this.ANIMATION_COUNT; i++) {
 			var animationNew = new Animation(0,this.animate[i],i,this.animationframerate[i]);
 			this.animations[i] = animationNew;
-			console.log(this.animations[i]);
 		}
 		this.animations[this.ANIMATION_TYPE_ATTACK].loop = false;
 		this.animations[this.ANIMATION_TYPE_JUMP].pingPong = true;
