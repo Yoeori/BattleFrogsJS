@@ -43,7 +43,24 @@ function init() {
 			EntityList[0] = new EntityPlayer(6470,672);
 			EntityList[1] = new EntityPickupCroissant(new Array(10616, 449+48));
 			EntityList[2] = new EntityPickupWeapon(new Array(14000, 430+36));
+			
             //EntityList[3] = new EntityReactor([456, 307+sml["radiation"].height]);
+			var Door_1 = EntityObstacleDoor.extend({
+				onDestroyed : function() {
+					worldState.set(worldState.CRYO_DOOR_BLOWN);
+					//TODO, add ForegroundObject
+				}
+			
+			});
+			//EntityList.push(new Door_1(sml["IntoRift_door_Intact"], [6030, 0], 313, 720, [6130, 400, 6130+120, 400+320]));
+			
+			var Door_2 = EntityObstacleDoor.extend({
+				onDestroyed : function() {
+					//TODO, add ForegroundObject
+				}
+			});
+			//EntityList.push(new Door_2(sml["BakeryWall_door_Intact"], [11375, 0], 306, 720, [11375, 400, 11375+120, 400+320]));
+			
 			GUIList.push(new guiText("Use WASD/Arrow keys to move and jump. Yay"));
 			start();
 			clearInterval(gameStarter);
@@ -68,7 +85,7 @@ function render() {
 		GUIList[i].render();
 	}
 	lastDelta = DeltaTime;
-	
+	rendercollision();
 	GameRenderer = requestAnimationFrame(render);
 }
 function update() {

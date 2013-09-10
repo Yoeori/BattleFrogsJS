@@ -2,10 +2,11 @@ EntityObstacle = Entity.extend({
 	
 	collisionBox : [],
 	
-	init : function(image, startingPoint, width, height, team, collisionBox) {
+	init : function(image, startingPoint, width, height, team, pcollisionBox) {
 		this._super(image, startingPoint, width, height, team);
 		this.collisionBox = [];
-		this.collisionBox = collisionBox;
+		this.collisionBox = pcollisionBox;
+		console.log(this.collisionBox);
 		collisions.push(this.collisionBox);
 	},
 	

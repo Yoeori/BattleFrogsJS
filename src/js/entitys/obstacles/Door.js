@@ -4,7 +4,7 @@ EntityObstacleDoor = EntityObstacle.extend({
 	
 	
 	init : function(image, startingPoint, width, height, collisionBox) {
-		this._super(image, startingPoint, width, height, collisionBox);
+		this._super(image, startingPoint, width, height, Team.THE_FROG_PIRATES, collisionBox);
 		this.setFullHealth(1);
 	},
 	
