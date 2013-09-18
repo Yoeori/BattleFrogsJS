@@ -15,7 +15,7 @@ var EntityReactor = Entity.extend({
 		this.radiationPulse = NextGaussian() * Math.sin(life) * 0.05;
 		
 		if(this.radiation > 0) {
-			var colEntitys = getCollidingEntities(this.getRadiationHitbox());
+			var colEntitys = world.getCollidingEntities(this.getRadiationHitbox());
             var max = this.radiationImage.width * 3 / 2;
             var ourPos = [this.PosX,this.PosY];
             for(var i = 0; i < colEntitys.length; i++) {
@@ -30,7 +30,7 @@ var EntityReactor = Entity.extend({
                 colEntitys[i].radiate(this, amount);
             }
 		} else if(worldState.state == worldState.RADIATION_CLEARED) {
-            var colEntitys = getCollidingEntities(this.getRadiationHitbox());
+            var colEntitys = world.getCollidingEntities(this.getRadiationHitbox());
             var foundPlayer = false;
             for(var i = 0; i < colEntitys.length; i++) {
                 if(colEntitys[i] instanceof EntityPlayer) {

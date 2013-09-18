@@ -23,6 +23,6 @@ var OpposingEntityInVicinityAction = Action.extend({
 	},
 	
 	getNearestEnemy : function(entity) {
-		return getNearestEntity([entity.PosX+entity.width/2),(entity.PosY-entity.height/2)]);
+		return world.getNearestEntity([entity.PosX+entity.width/2),(entity.PosY-entity.height/2)]);
 	}
 });

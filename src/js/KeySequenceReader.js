@@ -53,14 +53,14 @@ var KeySequenceReader = {
 	
 }
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("krislovesjulia",function() {
-	EntityList[0].hasgun = true;
+	BattleToads.player.hasgun = true;
 }));
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("babyolenka",function() {
-	EntityList[0].increaseHealth(500);
+	BattleToads.player.increaseHealth(500);
 }));
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("kungfufighting",function() {
-	EntityList[0].damageModifier = 5;
+	BattleToads.player.damageModifier = 5;
 }));
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("ohcamaro",function() {
-	EntityList[0].invulnerable = true;
+	BattleToads.player.invulnerable = true;
 }));
