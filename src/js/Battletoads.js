@@ -25,6 +25,7 @@ var BattleToads = Class.extend({
 	GameRenderer : 0,
     keyboard : 0,
 	world : 0,
+	rift : 0,
 	
 	init : function() {
         this.keyboard = new Input();
@@ -55,6 +56,7 @@ var BattleToads = Class.extend({
 	},
 	
 	update : function(deltaTime) {
+		Tick++;
 		if (this.playing && !this.paused)
 			this.world.update(deltaTime);
 		
@@ -98,7 +100,7 @@ var BattleToads = Class.extend({
 		this.playing = playing;
 		
 		if(playing) {
-			this.startTime = Math.round(new Date().getTime() / 1000);
+			this.startTime = Math.round(new Date().getTime());
 			this.world = new World(this, [14709, 720]);
 			this.player = new EntityPlayer(this.world, 6470, 672);
 			
@@ -116,16 +118,16 @@ var BattleToads = Class.extend({
 		if(this.world.state == State.WEAPON_PICKED_UP) {
 			this.setScreen(new ScreenText(this, "Guess you won't be needing that key after all. Use SPACE to shoot."));
 		} else if(this.world.state == State.GAME_OVER) {
-			this.setScreen();
+			this.setScreen(new ScreenDeath(this));
 		} else if(this.world.state == State.CRYO_DOOR_BLOWN) {
 			this.setScreen(new ScreenText(this, "There is a breach in the reactor room. Hurry!"));
 		} else if(this.world.state == State.RADIATION_CLEARED) {
-			this.setScreen(new RadiationClearedScreen(this));
+			this.setScreen(new ScreenText(this, "The radiation is gone. Get to the console and turn on the engines!"));
 		} else if(this.world.state == State.ENGINES_ON) {
 			this.setScreen(new ScreenText(this, "The engines have been enabled, clean up the remaining pirates!"));
 			this.rift.close();
 		} else if(this.world.state == State.WIN) {
-			this.setScreen(new ScreenWin());
+			this.setScreen(new ScreenWin(this));
 		}
 	},
 	

@@ -45,7 +45,7 @@ var World = Class.extend({
 	},
 	
 	setNextEasterEggSpawn : function() {
-	
+		
 	},
 	
 	render : function(camera) {
@@ -134,7 +134,7 @@ var World = Class.extend({
 		var player = new Array(x, y-height, x+width, y);
 		if(this.game.ALLOW_DEBUGGING) {
 			ctx.strokeStyle="#FFF";
-			ctx.strokeRect(x - BackgX,y-height,width,height);
+			ctx.strokeRect(x - this.game.camera.CameraX,y-height,width,height);
 		}
 		var isCollision = false;
 		for(var i = 0; i < this.collisions.length; i++) {

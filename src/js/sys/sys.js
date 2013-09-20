@@ -60,8 +60,7 @@ function Ticker() {
 			ReadFPS();
 	},1000);
 	GameTick = setInterval(function() {
-		if(!paused)
-			ReadTick();
+		ReadTick();
 	},1500);
 }
 var Tick = 0;

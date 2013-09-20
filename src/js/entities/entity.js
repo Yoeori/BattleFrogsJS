@@ -62,7 +62,7 @@ var Entity = Class.extend({
 								 this.height*curFrame[0],					// Start Y on image
 								 this.width, 								// Width in image to display
 								 this.height,								// Height in image to display
-								 this.PosX-game.camera.CameraX, 			// Position X
+								 this.PosX-this.world.game.camera.CameraX, 	// Position X
 								 this.PosY-this.height,						// Position Y
 								 this.width,								// Width to display
 								 this.height);								// Height to display
@@ -75,7 +75,7 @@ var Entity = Class.extend({
 								 this.height*curFrame[0], 
 								 this.width, 
 								 this.height, 
-								 -(this.PosX-game.camera.CameraX), 
+								 -(this.PosX-this.world.game.camera.CameraX), 
 								 this.PosY-this.height, 
 								 this.width, 
 								 this.height);

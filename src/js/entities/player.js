@@ -184,7 +184,7 @@ var EntityPlayer = Entity.extend({
 	},
 	
 	die : function() {
-		worldState.set(worldState.GAME_OVER);
+		this.world.setState(State.GAME_OVER);
 		this._super();
 	}
 });

@@ -27,7 +27,10 @@ loadimages = new Array(	new Array("bg","bg"),
 						
 						//Pickups
 						"weapon",
-						"croissant"
+						"croissant",
+					   
+					    "win",
+					    "gameover"
 					   );
 var sml = new Array();
 imagesloaded = 0;
