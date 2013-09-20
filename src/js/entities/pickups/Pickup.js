@@ -4,7 +4,7 @@ var EntityPickup = Entity.extend({
 		this.move();
 		
 		//check entity collision
-		ColidEnt = world.getCollidingEntities(this.getPickupHitbox());
+		ColidEnt = this.world.getCollidingEntities(this.getPickupHitbox());
 		for(var i = 0; i < ColidEnt.length; i++) {
 			if(ColidEnt[i] != this && this.isEligible(ColidEnt[i])) {
 				this.applyEffect(ColidEnt[i]);

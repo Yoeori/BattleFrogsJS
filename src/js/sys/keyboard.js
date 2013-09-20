@@ -180,7 +180,7 @@ document.documentElement.onkeydown = function(e) {
 			break;
 		case 118:
 			keyboard.F7 = true;
-			ToggleDebug();
+			game.ALLOW_DEBUGGING = !game.ALLOW_DEBUGGING;
 			break;
 		case 119:
 			keyboard.F8 = true;

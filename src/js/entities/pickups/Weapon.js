@@ -5,10 +5,10 @@ var EntityPickupWeapon = EntityPickup.extend({
 	},
 	
 	render : function() {
-		DisplayCTX.save();
-		DisplayCTX.translate(0, (Math.sin(Date.now() / 400) * 10) - 25);
+		ctx.save();
+		ctx.translate(0, (Math.sin(Date.now() / 400) * 10) - 25);
 		this._super();
-		DisplayCTX.restore();
+		ctx.restore();
 	},
 	
 	isEligible : function(entityEligible) {
@@ -17,7 +17,7 @@ var EntityPickupWeapon = EntityPickup.extend({
 	
 	applyEffect : function(Effentity) {
 		Effentity.hasgun = true;
-		worldState.set(worldState.WEAPON_PICKED_UP);
+		this.world.setState(State.WEAPON_PICKED_UP);
 		sound.play("weapon_pickup_v2");
 	},
 	

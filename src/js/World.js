@@ -66,8 +66,8 @@ var World = Class.extend({
 				this.entities[i].render();
 			}
 		}
-		
-		this.rendercollision(camera);
+		if(this.game.ALLOW_DEBUGGING)
+			this.rendercollision(camera);
 
 	},
 	
@@ -91,7 +91,7 @@ var World = Class.extend({
 	
 	setState : function(newState) {
 		this.state = newState;
-		
+		this.game.onWorldStateChanged();
 	},
 	
 	addCollision : function(col) {
@@ -100,5 +100,33 @@ var World = Class.extend({
 	
 	addEntity : function(ent) {
 		this.entities.push(ent);
+	},
+	
+	getCollidingEntities : function(Point) {
+		if(Point.length == 4) {
+			Entitycheck = [Point[0], Point[1]-Point[3], Point[0]+Point[2], Point[1]];
+			Entitycolidedlist = [];
+			for(var i = 0; i < this.entities.length; i++) {
+				if(Entitycheck[2] > this.entities[i].PosX && Entitycheck[0] < (this.entities[i].width+this.entities[i].PosX) && Entitycheck[3] > (this.entities[i].PosY-this.entities[i].height) && Entitycheck[1] < this.entities[i].PosY) {
+					Entitycolidedlist.push(this.entities[i]);
+				}
+			}
+			return Entitycolidedlist;
+		} else if(Point.length == 3) {
+			Entitycolidedlist = [];
+			for(var i = 0; i < EntityList.length; i++) {
+				//Check circle collision
+				var dx = Point[0]-(this.entities[i].PosX+(this.entities[i].width/2));
+				var dy = Point[1]-(this.entities[i].PosX-(this.entities[i].height/2))
+				var distance = Math.sqrt((dx*dx)+(dy*dy));
+				if(distance >= Point[2]) {
+					Entitycolidedlist.push(this.entities[i]);
+				}
+			}
+			return Entitycolidedlist;
+		} else {
+			Entitycolidedlist = [];
+			return Entitycolidedlist;
+		}
 	}
 });

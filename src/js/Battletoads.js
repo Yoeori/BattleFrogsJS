@@ -60,7 +60,8 @@ var BattleToads = Class.extend({
 			//sound.BgMusic[i].update();
 		}
 		
-		if(this.screen != 0) this.screen.update(deltaTime);
+		if(this.screen != 0) 
+			this.screen.update(deltaTime);
 	},
 	
 	render : function() {
@@ -70,7 +71,7 @@ var BattleToads = Class.extend({
 			if(this.gui != 0) this.gui.render();
 		}
 		
-		if(this.screen != 0) 
+		if(this.screen != 0)
 			this.screen.render();
 		
 		ObjectT = this;
@@ -97,29 +98,32 @@ var BattleToads = Class.extend({
 		if(playing) {
 			this.startTime = Math.round(new Date().getTime() / 1000);
 			this.world = new World(this, [14709, 720]);
-			this.player = new EntityPlayer(this, 6470, 672);
+			this.player = new EntityPlayer(this.world, 6470, 672);
+			
 			this.loadCollisions();
 			
 			this.world.addEntity(this.player);
-			
-			
+			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449+49]));
+			this.world.addEntity(new EntityPickupWeapon(this.world, [14000, 430+36]));
+			this.setScreen(new ScreenText(this, "Use WASD/Arrow keys to move and jump. Yay"));
 		}
 	},
 	
 	onWorldStateChanged : function() {
-		if(world.state == State.WEAPON_PICKED_UP) {
-			this.setScreen(new guiText("Guess you won't be needing that key after all. Use SPACE to shoot."));
-		} else if(world.state == State.GAME_OVER) {
+		console.log("Game state was changed to: " + this.world.state);
+		if(this.world.state == State.WEAPON_PICKED_UP) {
+			this.setScreen(new ScreenText(this, "Guess you won't be needing that key after all. Use SPACE to shoot."));
+		} else if(this.world.state == State.GAME_OVER) {
 			this.setScreen();
-		} else if(world.state == State.CRYO_DOOR_BLOWN) {
-			this.setScreen(new guiText("There is a breach in the reactor room. Hurry!"));
-		} else if(world.state == State.RADIATION_CLEARED) {
+		} else if(this.world.state == State.CRYO_DOOR_BLOWN) {
+			this.setScreen(new ScreenText(this, "There is a breach in the reactor room. Hurry!"));
+		} else if(this.world.state == State.RADIATION_CLEARED) {
 			this.setScreen(new RadiationClearedScreen(this));
-		} else if(world.state == State.ENGINES_ON) {
-			this.setScreen(new guiText("The engines have been enabled, clean up the remaining pirates!"));
-			rift.close();
-		} else if(world.state == State.WIN) {
-			this.setScreen(new WinScreen());
+		} else if(this.world.state == State.ENGINES_ON) {
+			this.setScreen(new ScreenText(this, "The engines have been enabled, clean up the remaining pirates!"));
+			this.rift.close();
+		} else if(this.world.state == State.WIN) {
+			this.setScreen(new ScreenWin());
 		}
 	},
 	
