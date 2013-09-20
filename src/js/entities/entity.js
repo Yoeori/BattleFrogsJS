@@ -114,22 +114,22 @@ var Entity = Class.extend({
         var collidedVertically = false;
         var onFloor = false;
 		
-		if(!checkCollision(newX, this.PosY, this.width, this.height, false)) {
+		if(!this.world.checkCollision(newX, this.PosY, this.width, this.height, false)) {
 			this.PosX = newX;
 		} else {
 			this.velocityX = 0;
 			collidedHorizontally = true;
 		}
 		if(this.velocityY < 0) {
-			if(!checkCollision(this.PosX, newY, this.width, this.height, false)) {
+			if(!this.world.checkCollision(this.PosX, newY, this.width, this.height, false)) {
 				this.PosY = newY;
 			} else {
 				collidedVertically = true;
 			}
 		} else {
-			if(!checkCollision(this.PosX, newY, this.width, Math.max(this.velocityY, 0.75), true)) {
+			if(!this.world.checkCollision(this.PosX, newY, this.width, Math.max(this.velocityY, 0.75), true)) {
 				this.PosY = newY;
-				if(checkCollision(this.PosX, newY+1, this.width, this.velocityY+10, true)) {
+				if(this.world.checkCollision(this.PosX, newY+1, this.width, this.velocityY+10, true)) {
 					onFloor = true;
 				}
 			} else {

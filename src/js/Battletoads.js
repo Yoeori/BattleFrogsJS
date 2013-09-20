@@ -21,7 +21,7 @@ var BattleToads = Class.extend({
 	paused : false,
 	player : 0,
 	gui : 0,
-	ALLOW_DEBUGGING : false,
+	ALLOW_DEBUGGING : true,
 	GameRenderer : 0,
     keyboard : 0,
 	world : 0,

@@ -44,7 +44,7 @@ var EntityReactor = Entity.extend({
                 this.enteredConsoleTime += Delta;
                 if(this.enteredConsoleTime >= this.CONSOLE_ACTIVATION_TIME) {
                     this.enteredConsoleTime = 0;
-                    if(hasPirates()) {
+                    if(this.world.hasPirates()) {
                         worldState.set(worldState.ENGINES_ON);
                     } else {
                         worldState.set(worldState.WIN);

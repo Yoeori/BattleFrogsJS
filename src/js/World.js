@@ -128,5 +128,53 @@ var World = Class.extend({
 			Entitycolidedlist = [];
 			return Entitycolidedlist;
 		}
+	},
+	
+	checkCollision : function(x, y, width, height,platform) {
+		var player = new Array(x, y-height, x+width, y);
+		if(this.game.ALLOW_DEBUGGING) {
+			ctx.strokeStyle="#FFF";
+			ctx.strokeRect(x - BackgX,y-height,width,height);
+		}
+		var isCollision = false;
+		for(var i = 0; i < this.collisions.length; i++) {
+			collision = this.collisions[i];
+			if(collision[1] != collision[3]) {
+				if(player[2] > collision[0] && player[0] < collision[2] && player[3] > collision[1] && player[1] < collision[3]) {
+					return true;
+				}
+			}
+			if(platform) {
+				if(player[2] > collision[0] && player[0] < collision[2] && player[3] > collision[1] && player[1] < collision[3]) {
+					return true;
+				}
+			}
+		}
+	},
+	
+	hasPirates : function() {
+		for(var i = 0; i < this.entities.length; i++) {
+			if(this.entities[i] instanceof Humanoid && this.entities[i].team == Team.THE_FROG_PIRATES) {
+				return true;
+			}
+		}
+		return false;
+	},
+	
+	getNearestEntity : function(target,team) {
+		var result = 0;
+		var bestDist = 0;
+		for(var i = 0; i < this.entities.length; i++) {
+			if (this.entities[i].team != team) continue;
+			if (this.entities[i] instanceof EntityHumanoid || this.entities[i] instanceof EntityPlayer) {
+				var center = [(this.entities[i].PosX+this.entities[i].width/2),(this.entities[i].PosY-this.entities[i].height/2)];
+				var dist = distanceSquared(center,target);
+				if (result == 0 || dist < bestDist) {
+					bestDist = dist;
+					result = this.entities[i];
+				}
+			}
+		}
+		return result;
 	}
 });
