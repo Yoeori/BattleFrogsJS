@@ -87,6 +87,7 @@ var BattleToads = Class.extend({
 	},
 	
 	keyPressed : function(e) {
+		KeySequenceReader.appendChar(e);
 		this.keyboard.onKeyDown(e);
 	},
 	

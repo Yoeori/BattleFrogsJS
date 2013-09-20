@@ -9,7 +9,8 @@ var KeySequenceReader = {
 		if(matchingSequence != 0) {
 			matchingSequence.effect();
 			this.currentSequence = "";
-			GUIList.push(new guiText("Cheat activated!"));
+			game.setScreen(new ScreenText(game, "Cheat activated!"));
+			game.scorePenalty(1000 * 60);
 		} else if(!this.hasPartialMatchingSequence()) {
 			this.currentSequence = "";
 		}
@@ -53,14 +54,14 @@ var KeySequenceReader = {
 	
 }
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("krislovesjulia",function() {
-	BattleToads.player.hasgun = true;
+	game.player.hasgun = true;
 }));
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("babyolenka",function() {
-	BattleToads.player.increaseHealth(500);
+	game.player.increaseHealth(500);
 }));
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("kungfufighting",function() {
-	BattleToads.player.damageModifier = 5;
+	game.player.damageModifier = 5;
 }));
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("ohcamaro",function() {
-	BattleToads.player.invulnerable = true;
+	game.player.invulnerable = true;
 }));
