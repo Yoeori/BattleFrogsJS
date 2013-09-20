@@ -44,163 +44,299 @@ Input = function() {
 	this.F10 = false;
 	this.F11 = false;
 	this.F12 = false;
+    
+    this.onKeyDown = function(e) {
+        switch (e){
+            case 13:
+                this.enter = true;
+                break;
+            case 27:
+                this.escape = true;
+                break;
+            case 32:
+                this.space = true;
+                break;
+            case 37:
+                this.left = true;
+                break;
+            case 38:
+                this.up = true;
+                break;
+            case 39:
+                this.right = true;
+                break;
+            case 40:
+                this.down = true;
+                break;
+            case 65:
+                this.a = true;
+                break;
+            case 66:
+                this.b = true;
+                break;
+            case 67:
+                this.c = true;
+                break;
+            case 68:
+                this.d = true;
+                break;
+            case 69:
+                this.e = true;
+                break;
+            case 70:
+                this.f = true;
+                break;
+            case 71:
+                this.g = true;
+                break;
+            case 72:
+                this.h = true;
+                break;
+            case 73:
+                this.i = true;
+                break;
+            case 74:
+                this.j = true;
+                break;
+            case 75:
+                this.k = true;
+                break;
+            case 76:
+                this.l = true;
+                break;
+            case 77:
+                this.m = true;
+                break;
+            case 78:
+                this.n = true;
+                break;
+            case 79:
+                this.o = true;
+                break;
+            case 80:
+                this.p = true;
+                break;
+            case 81:
+                this.q = true;
+                break;
+            case 82:
+                this.r = true;
+                break;
+            case 83:
+                this.s = true;
+                break;
+            case 84:
+                this.t = true;
+                break;
+            case 85:
+                this.u = true;
+                break;
+            case 86:
+                this.v = true;
+                break;
+            case 87:
+                this.w = true;
+                break;
+            case 88:
+                this.x = true;
+                break;
+            case 89:
+                this.y = true;
+                break;
+            case 90:
+                this.z = true;
+                break;
+            case 112:
+                this.F1 = true;
+                break;
+            case 113:
+                this.F2 = true;
+                break;
+            case 114:
+                this.F3 = true;
+                break;
+            case 115:
+                this.F4 = true;
+                break;
+            case 116:
+                this.F5 = true;
+                break;
+            case 117:
+                this.F6 = true;
+                break;
+            case 118:
+                this.F7 = true;
+                break;
+            case 119:
+                this.F8 = true;
+                break;
+            case 120:
+                this.F9 = true;
+                break;
+            case 121:
+                this.F10 = true;
+                break;
+            case 122:
+                this.F11 = true;
+                break;
+            case 123:
+                this.F12 = true;
+                break;
+        }
+        
+    }
+    
+    this.onKeyUp = function(e) {
+        switch (e){
+            case 13:
+                this.enter = false;
+                break;
+            case 27:
+                this.escape = false;
+                break;
+            case 32:
+                this.space = false;
+                break;
+            case 37:
+                this.left = false;
+                break;
+            case 38:
+                this.up = false;
+                break;
+            case 39:
+                this.right = false;
+                break;
+            case 40:
+                this.down = false;
+                break;
+            case 65:
+                this.a = false;
+                break;
+            case 66:
+                this.b = false;
+                break;
+            case 67:
+                this.c = false;
+                break;
+            case 68:
+                this.d = false;
+                break;
+            case 69:
+                this.e = false;
+                break;
+            case 70:
+                this.f = false;
+                break;
+            case 71:
+                this.g = false;
+                break;
+            case 72:
+                this.h = false;
+                break;
+            case 73:
+                this.i = false;
+                break;
+            case 74:
+                this.j = false;
+                break;
+            case 75:
+                this.k = false;
+                break;
+            case 76:
+                this.l = false;
+                break;
+            case 77:
+                this.m = false;
+                break;
+            case 78:
+                this.n = false;
+                break;
+            case 79:
+                this.o = false;
+                break;
+            case 80:
+                this.p = false;
+                break;
+            case 81:
+                this.q = false;
+                break;
+            case 82:
+                this.r = false;
+                break;
+            case 83:
+                this.s = false;
+                break;
+            case 84:
+                this.t = false;
+                break;
+            case 85:
+                this.u = false;
+                break;
+            case 86:
+                this.v = false;
+                break;
+            case 87:
+                this.w = false;
+                break;
+            case 88:
+                this.x = false;
+                break;
+            case 89:
+                this.y = false;
+                break;
+            case 90:
+                this.z = false;
+                break;
+            case 112:
+                this.F1 = false;
+                break;
+            case 113:
+                this.F2 = false;
+                break;
+            case 114:
+                this.F3 = false;
+                break;
+            case 115:
+                this.F4 = false;
+                break;
+            case 116:
+                this.F5 = false;
+                break;
+            case 117:
+                this.F6 = false;
+                break;
+            case 118:
+                this.F7 = false;
+                break;
+            case 119:
+                this.F8 = false;
+                break;
+            case 120:
+                this.F9 = false;
+                break;
+            case 121:
+                this.F10 = false;
+                break;
+            case 122:
+                this.F11 = false;
+                break;
+            case 123:
+                this.F12 = false;
+                break;
+        }
+        
+    }
 };
-var keyboard = new Input();
 
 document.documentElement.onkeydown = function(e) {
-	var keycode;
+    var keycode;
 	if(window.event) {
 		keycode = window.event.keyCode;
-	} else if(e){
+	} else if(e) {
 		keycode = e.which;
 	}
-	if(KeySequenceReader)
-		KeySequenceReader.appendChar(keycode);
-	
-	switch (keycode){
-		case 13:
-			keyboard.enter = true;
-			break;
-		case 27:
-			keyboard.escape = true;
-			console.log("You pressed escape :D");
-			GamePause(1);
-			break;
-		case 32:
-			keyboard.space = true;
-			break;
-		case 37:
-			keyboard.left = true;
-			break;
-		case 38:
-			keyboard.up = true;
-			break;
-		case 39:
-			keyboard.right = true;
-			break;
-		case 40:
-			keyboard.down = true;
-			break;
-		case 65:
-			keyboard.a = true;
-			break;
-		case 66:
-			keyboard.b = true;
-			break;
-		case 67:
-			keyboard.c = true;
-			break;
-		case 68:
-			keyboard.d = true;
-			break;
-		case 69:
-			keyboard.e = true;
-			break;
-		case 70:
-			keyboard.f = true;
-			break;
-		case 71:
-			keyboard.g = true;
-			break;
-		case 72:
-			keyboard.h = true;
-			break;
-		case 73:
-			keyboard.i = true;
-			break;
-		case 74:
-			keyboard.j = true;
-			break;
-		case 75:
-			keyboard.k = true;
-			break;
-		case 76:
-			keyboard.l = true;
-			break;
-		case 77:
-			keyboard.m = true;
-			break;
-		case 78:
-			keyboard.n = true;
-			break;
-		case 79:
-			keyboard.o = true;
-			break;
-		case 80:
-			keyboard.p = true;
-			break;
-		case 81:
-			keyboard.q = true;
-			break;
-		case 82:
-			keyboard.r = true;
-			break;
-		case 83:
-			keyboard.s = true;
-			break;
-		case 84:
-			keyboard.t = true;
-			break;
-		case 85:
-			keyboard.u = true;
-			break;
-		case 86:
-			keyboard.v = true;
-			break;
-		case 87:
-			keyboard.w = true;
-			break;
-		case 88:
-			keyboard.x = true;
-			break;
-		case 89:
-			keyboard.y = true;
-			break;
-		case 90:
-			keyboard.z = true;
-			break;
-		case 112:
-			keyboard.F1 = true;
-			break;
-		case 113:
-			keyboard.F2 = true;
-			break;
-		case 114:
-			keyboard.F3 = true;
-			break;
-		case 115:
-			keyboard.F4 = true;
-			sound.toggleBG();
-			break;
-		case 116:
-			keyboard.F5 = true;
-			break;
-		case 117:
-			keyboard.F6 = true;
-			break;
-		case 118:
-			keyboard.F7 = true;
-			game.ALLOW_DEBUGGING = !game.ALLOW_DEBUGGING;
-			break;
-		case 119:
-			keyboard.F8 = true;
-			sound.toggle();
-			break;
-		case 120:
-			keyboard.F9 = true;
-			restartGame();
-			break;
-		case 121:
-			keyboard.F10 = true;
-			break;
-		case 122:
-			keyboard.F11 = true;
-			break;
-		case 123:
-			keyboard.F12 = true;
-			break;
-	}
-};
+    game.keyPressed(keycode);
+}
 
 document.documentElement.onkeyup = function(e) {
 	var keycode;
@@ -209,142 +345,5 @@ document.documentElement.onkeyup = function(e) {
 	} else if(e){
 		keycode = e.which;
 	}
-	
-	switch (keycode){
-		case 13:
-			keyboard.enter = false;
-			break;
-		case 32:
-			keyboard.space = false;
-			break;
-		case 27:
-			keyboard.escape = false;
-			break;
-		case 37:
-			keyboard.left = false;
-			break;
-		case 38:
-			keyboard.up = false;
-			break;
-		case 39:
-			keyboard.right = false;
-			break;
-		case 40:
-			keyboard.down = false;
-			break;
-		case 65:
-			keyboard.a = false;
-			break;
-		case 66:
-			keyboard.b = false;
-			break;
-		case 67:
-			keyboard.c = false;
-			break;
-		case 68:
-			keyboard.d = false;
-			break;
-		case 69:
-			keyboard.e = false;
-			break;
-		case 70:
-			keyboard.f = false;
-			break;
-		case 71:
-			keyboard.g = false;
-			break;
-		case 72:
-			keyboard.h = false;
-			break;
-		case 73:
-			keyboard.i = false;
-			break;
-		case 74:
-			keyboard.j = false;
-			break;
-		case 75:
-			keyboard.k = false;
-			break;
-		case 76:
-			keyboard.l = false;
-			break;
-		case 77:
-			keyboard.m = false;
-			break;
-		case 78:
-			keyboard.n = false;
-			break;
-		case 79:
-			keyboard.o = false;
-			break;
-		case 80:
-			keyboard.p = false;
-			break;
-		case 81:
-			keyboard.q = false;
-			break;
-		case 82:
-			keyboard.r = false;
-			break;
-		case 83:
-			keyboard.s = false;
-			break;
-		case 84:
-			keyboard.t = false;
-			break;
-		case 85:
-			keyboard.u = false;
-			break;
-		case 86:
-			keyboard.v = false;
-			break;
-		case 87:
-			keyboard.w = false;
-			break;
-		case 88:
-			keyboard.x = false;
-			break;
-		case 89:
-			keyboard.y = false;
-			break;
-		case 90:
-			keyboard.z = false;
-			break;
-		case 112:
-			keyboard.F1 = false;
-			break;
-		case 113:
-			keyboard.F2 = false;
-			break;
-		case 114:
-			keyboard.F3 = false;
-			break;
-		case 115:
-			keyboard.F4 = false;
-			break;
-		case 116:
-			keyboard.F5 = false;
-			break;
-		case 117:
-			keyboard.F6 = false;
-			break;
-		case 118:
-			keyboard.F7 = false;
-			break;
-		case 119:
-			keyboard.F8 = false;
-			break;
-		case 120:
-			keyboard.F9 = false;
-			break;
-		case 121:
-			keyboard.F10 = false;
-			break;
-		case 122:
-			keyboard.F11 = false;
-			break;
-		case 123:
-			keyboard.F12 = false;
-			break;
-	}
+	game.keyboard.onKeyUp(keycode);
 }

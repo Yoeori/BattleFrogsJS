@@ -50,7 +50,7 @@ var EntityPlayer = Entity.extend({
 			cycledAttack = true;
 		}
 		
-		if(keyboard.space && !this.isAttacking && this.hasgun && !this.wasjumping) {
+		if(this.world.game.keyboard.space && !this.isAttacking && this.hasgun && !this.wasjumping) {
 			this.isAttacking = true;
 			this.attackStart = new Date().getTime();
 			this.hasAttackHappened = false;
@@ -86,15 +86,15 @@ var EntityPlayer = Entity.extend({
 		
 		this.animations[this.animType].update(Delta);
 
-		if((keyboard.d || keyboard.right) && !this.isAttacking) {
+		if((this.world.game.keyboard.d || this.world.game.keyboard.right) && !this.isAttacking) {
 			this.velocityX += this.getWalkingspeed()*this.horizontalSpeed;
 		}
 			
-		if((keyboard.a || keyboard.left) && !this.isAttacking) {
+		if((this.world.game.keyboard.a || this.world.game.keyboard.left) && !this.isAttacking) {
 			this.velocityX -= this.getWalkingspeed()*this.horizontalSpeed;
 		}
 			
-		if((keyboard.w || keyboard.up) && !this.jumping && !this.wasjumping &&!this.isAttacking) {
+		if((this.world.game.keyboard.w || this.world.game.keyboard.up) && !this.jumping && !this.wasjumping &&!this.isAttacking) {
 			if(this.velocityY == 0)
 				sound.play("AnnaB_Jumping_Up");
 			this.velocityY -= this.jumpSpeed;

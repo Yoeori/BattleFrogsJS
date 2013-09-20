@@ -2,7 +2,6 @@ var canvas = document.getElementById('GameCanvas');
 var ctx = canvas.getContext('2d');
 var paused = false;
 var DeltaTime = Date.now();
-var Debug = false;
 
 window.onfocus = function() { paused = false; };
 window.onblur = function() { paused = true; };
@@ -22,10 +21,13 @@ var BattleToads = Class.extend({
 	paused : false,
 	player : 0,
 	gui : 0,
-	ALLOW_DEBUGGING: false,
-	GameRenderer: 0,
+	ALLOW_DEBUGGING : false,
+	GameRenderer : 0,
+    keyboard : 0,
+	world : 0,
 	
 	init : function() {
+        this.keyboard = new Input();
 		this.camera = new Camera(this,[this.GAME_WIDTH, this.GAME_HEIGHT]);
 		this.gui = new Gui(this);
 		
@@ -82,8 +84,8 @@ var BattleToads = Class.extend({
 		//Do Nothing
 	},
 	
-	keyPressed : function() {
-	
+	keyPressed : function(e) {
+		this.keyboard.onKeyDown(e);
 	},
 	
 	setScreen : function(nScreen) {

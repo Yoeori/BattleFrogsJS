@@ -29,10 +29,10 @@ function rendercollision() {
 }
 function checkCollision(x, y, width, height,platform) {
 	var player = new Array(x, y-height, x+width, y);
-	if(Debug) {
+	/*if(Debug) {
 		DisplayCTX.strokeStyle="#FFF";
 		DisplayCTX.strokeRect(x - BackgX,y-height,width,height);
-	}
+	}*/
 	var isCollision = false;
 	for(var i = 0; i < collisions.length; i++) {
 		collision = collisions[i];
