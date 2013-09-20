@@ -1,7 +1,7 @@
 var EntityPickupCroissant = EntityPickup.extend({
 	
-	init : function(startingPoint) {
-		this._super(sml["croissant"], startingPoint, 52, 48, Team.THE_FRENCH);
+	init : function(world, startingPoint) {
+		this._super(world, sml["croissant"], startingPoint, 52, 48, Team.THE_FRENCH);
 	},
 	
 	isEligible : function(entityEligible) {

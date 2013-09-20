@@ -1,22 +1,3 @@
-//Ajax script
-function ajaxRequest(url,vars,callbackFunction) {
-	if(window.XMLHttpRequest){
-		var request = new XMLHttpRequest();
-	} else {
-		var request = new ActiveXObject('MSXML2.XMLHTTP.3.0');
-	}
-	request.open('GET',url,true);
-	request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
- 
-	request.onreadystatechange = function(){
-		if(request.readyState == 4 && request.status == 200){
-			if(request.responseText){
-				callbackFunction(request.responseText);
-			}
-		}
-	}
-	request.send(vars);
-}
 var collisions = new Array();
 ajaxRequest("acties/collisions.txt","",function(reply) {
 	var splited = reply.split(",");

@@ -1,171 +1,129 @@
 var canvas = document.getElementById('GameCanvas');
-var DisplayCTX = canvas.getContext('2d');
-var FPS = 60;
-var Tick = 0;
-var savedFPS = 60;
+var ctx = canvas.getContext('2d');
 var paused = false;
-var Debug = false;
 var DeltaTime = Date.now();
-var lastDelta = Date.now();
-
-var GameRenderer;
-var GameUpdater;
-var GameFPStick;
-var GameTick;
-
-var EntityList = [];
-var GUIList = [];
+var Debug = false;
 
 window.onfocus = function() { paused = false; };
 window.onblur = function() { paused = true; };
 
-function init() {
-	function start() {
-		GameRenderer = requestAnimationFrame(render);
-		GameUpdater = setInterval(function() {
-			if(!paused) {
-				update();
-				Tick++;
-			}
-		},15);
-		ReadFPS();
-		GameFPStick = setInterval(function() {
-			if(!paused)
-				ReadFPS();
-		},1000);
-		GameTick = setInterval(function() {
-			if(!paused)
-				ReadTick();
-		},1500);
-	}
-	var gameStarter = setInterval(function() {
-		if(imagesloaded == "done" && soundloaded == true) {
-			EntityList[0] = new EntityPlayer(6470,672);
-			EntityList[1] = new EntityPickupCroissant(new Array(10616, 449+48));
-			EntityList[2] = new EntityPickupWeapon(new Array(14000, 430+36));
-			
-            //EntityList[3] = new EntityReactor([456, 307+sml["radiation"].height]);
-			var Door_1 = EntityObstacleDoor.extend({
-				onDestroyed : function() {
-					worldState.set(worldState.CRYO_DOOR_BLOWN);
-					//TODO, add ForegroundObject
-				}
-			
-			});
-			//EntityList.push(new Door_1(sml["IntoRift_door_Intact"], [6030, 0], 313, 720, [6130, 400, 6130+120, 400+320]));
-			
-			var Door_2 = EntityObstacleDoor.extend({
-				onDestroyed : function() {
-					//TODO, add ForegroundObject
-				}
-			});
-			//EntityList.push(new Door_2(sml["BakeryWall_door_Intact"], [11375, 0], 306, 720, [11375, 400, 11375+120, 400+320]));
-			
-			GUIList.push(new guiText("Use WASD/Arrow keys to move and jump. Yay"));
-			start();
-			clearInterval(gameStarter);
-		}
-	},1000/60);
-}
-function render() {
-	if(!paused) {
-		FPS++;
-	}
-	renderBackground();
-	for(var i= EntityList.length; i >= 0; i--) {
-		if(EntityList[i] != null) {
-			EntityList[i].render(DeltaTime-lastDelta);
-		}
-	}
-	renderForeground();
-	if(Debug) {
-		rendercollision();
-	}
-	for(var i=0; i < GUIList.length; i++) {
-		GUIList[i].render();
-	}
-	lastDelta = DeltaTime;
-	rendercollision();
-	GameRenderer = requestAnimationFrame(render);
-}
-function update() {
-	DeltaTime += 15;
-	for(var i=0; i < EntityList.length; i++) {
-		if(EntityList[i] != null) {
-			EntityList[i].update(15);
-		}
-	}
-	
-	for(var i=0; i < GUIList.length; i++) {
-		GUIList[i].update();
-	}
-	
-	for(var i = 0; i < sound.BgMusic.length; i++) {
-		//sound.BgMusic[i].update();
-	}
-	
-}
-function ReadFPS() {
-	document.getElementById("fps").innerHTML = FPS;
-	savedFPS = FPS;
-	FPS = 0;
-}
-function ReadTick() {
-	//Game Ticks
-	document.getElementById("Tick").innerHTML = Tick+"%";
-	Tick = 0;
-}
-function ToggleDebug() {
-	Debug = !Debug;
-}
-function restartGame() {
-	cancelAnimationFrame(GameRenderer);
-	clearInterval(GameUpdater);
-	clearInterval(GameFPStick);
-	EntityList.length = 0;
-	GUIList.length = 0;
-	init();
-}
-worldState = {
-	INTRO: 0,
-	WEAPON_PICKED_UP: 1,
-	GAME_OVER: 2,
-	CRYO_DOOR_BLOWN: 3,
-	RADIATION_CLEARED: 4,
-	ENGINES_ON: 5,
-	WIN: 6,
-	state: this.INTRO,
-	
-	set: function(newworldstate) {	
-		console.log("Game state was changed to: " + newworldstate);
-		this.state = newworldstate;
-		this.onWorldStateChanged();
-	},
-	
-	onWorldStateChanged: function() {
-		if (this.state == this.WEAPON_PICKED_UP) {
-			GUIList.push(new guiText("Guess you won't be needing that key after all. Use SPACE to shoot."));
-		} else if (this.state == this.GAME_OVER) {
-			GUIList.push();
-		} else if (this.state == this.CRYO_DOOR_BLOWN) {
-			GUIList.push(new guiText("There is a breach in the reactor room. Hurry!"));
-		} else if (this.state == this.RADIATION_CLEARED) {
-			setScreen(new RadiationClearedScreen(this));
-		} else if (this.state == this.ENGINES_ON) {
-			GUIList.push(new guiText("The engines have been enabled, clean up the remaining pirates!"));
-			rift.close();
-		} else if (this.state == this.WIN) {
-			setScreen(new WinScreen(this));
-			GUIList.push();
-		}
-	}
-	
-}
 Team = Object.freeze({
 	THE_FRENCH: 0,
 	THE_FROG_PIRATES: 1,
 	SYSTEM: 2,
-});	
-function NextGaussian() {
-	return (Math.random()*2-1)+(Math.random()*2-1)+(Math.random()*2-1);
-}
+});
+var BattleToads = Class.extend({
+	GAME_WIDTH : 1280,
+	GAME_HEIGHT : 720,
+	
+	screen : 0,
+	startTime : 0,
+	playing : false,
+	paused : false,
+	player : 0,
+	gui : 0,
+	ALLOW_DEBUGGING: false,
+	GameRenderer: 0,
+	
+	init : function() {
+		this.camera = new Camera(this,[this.GAME_WIDTH, this.GAME_HEIGHT]);
+		this.gui = new Gui(this);
+		
+		ObjectT = this;
+		this.GameRenderer = requestAnimationFrame(function() {ObjectT.render();});
+		setInterval(function() {ObjectT.update(15);},15);
+		
+		this.setPlaying(true);
+	},
+	
+	loadCollisions : function() {
+		if(LoadColl == 0 && LoadColl instanceof Array) {
+			this.world.collisions = LoadColl;
+		} else {
+			Object = this;
+			ajaxRequest("acties/collisions.txt","",function(reply) {
+				var splited = reply.split(",");
+				for(var i=0; i < splited.length; i++) {
+					var splitedar = splited[i].split("|")
+					Object.world.addCollision(splitedar);
+					
+				}
+			});
+		}
+	},
+	
+	update : function(deltaTime) {
+		if (this.playing && !this.paused)
+			this.world.update(deltaTime);
+		
+		for(var i = 0; i < sound.BgMusic.length; i++) {
+			//sound.BgMusic[i].update();
+		}
+		
+		if(this.screen != 0) this.screen.update(deltaTime);
+	},
+	
+	render : function() {
+		
+		if (this.playing) {
+			this.world.render(this.camera);
+			if(this.gui != 0) this.gui.render();
+		}
+		
+		if(this.screen != 0) 
+			this.screen.render();
+		
+		ObjectT = this;
+		this.GameRenderer = requestAnimationFrame(function() {ObjectT.render();});
+	},
+	
+	mouseClicked : function() {
+		//Do Nothing
+	},
+	
+	keyPressed : function() {
+	
+	},
+	
+	setScreen : function(nScreen) {
+		if(this.screen != 0) this.screen.onStop();
+		this.screen = nScreen;
+		if(this.screen != 0) this.screen.onStart();
+	},
+	
+	setPlaying : function(playing) {
+		this.playing = playing;
+		
+		if(playing) {
+			this.startTime = Math.round(new Date().getTime() / 1000);
+			this.world = new World(this, [14709, 720]);
+			this.player = new EntityPlayer(this, 6470, 672);
+			this.loadCollisions();
+			
+			this.world.addEntity(this.player);
+			
+			
+		}
+	},
+	
+	onWorldStateChanged : function() {
+		if(world.state == State.WEAPON_PICKED_UP) {
+			this.setScreen(new guiText("Guess you won't be needing that key after all. Use SPACE to shoot."));
+		} else if(world.state == State.GAME_OVER) {
+			this.setScreen();
+		} else if(world.state == State.CRYO_DOOR_BLOWN) {
+			this.setScreen(new guiText("There is a breach in the reactor room. Hurry!"));
+		} else if(world.state == State.RADIATION_CLEARED) {
+			this.setScreen(new RadiationClearedScreen(this));
+		} else if(world.state == State.ENGINES_ON) {
+			this.setScreen(new guiText("The engines have been enabled, clean up the remaining pirates!"));
+			rift.close();
+		} else if(world.state == State.WIN) {
+			this.setScreen(new WinScreen());
+		}
+	},
+	
+	scorePenalty : function(penalty) {
+		this.startTime -= penalty;
+	}
+});

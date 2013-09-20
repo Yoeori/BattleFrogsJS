@@ -24,8 +24,8 @@ var EntityPlayer = Entity.extend({
 	hasAttackHappened : false,
 	
 	
-	init: function(x, y) {
-		this._super(sml["player"], [x, y], 152, 195, Team.THE_FRENCH);
+	init: function(world, x, y) {
+		this._super(world, sml["player"], [x, y], 152, 195, Team.THE_FRENCH);
 		this.horizontalSpeed = 8;
 		this.fullHealth = 200;
 		this.currentHealth = this.fullHealth;

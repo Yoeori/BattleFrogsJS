@@ -12,6 +12,7 @@ var Entity = Class.extend({
 	isMoving: false,
 	wasMoving: false,
 	frame: 0,
+	world: 0,
 	
 	lifestart: 0,
 	horizontalSpeed: 0,
@@ -37,9 +38,10 @@ var Entity = Class.extend({
 	
 	inversegravity : false,
 	
-	init : function(image,startingPoint,width,height,team) {
+	init : function(world, image, startingPoint, width, height, team) {
 		this.animationSheet = image;
 		this.team = team;
+		this.world = world;
 		this.lifestart = new Date().getTime();
 		this.startX = startingPoint[0];
 		this.startY = startingPoint[1];
@@ -49,41 +51,41 @@ var Entity = Class.extend({
 		this.height = height;
 	},
 	
-	render : function(Delta) {
+	render : function() {
 		this.frame++;
 		
 		var curFrame = this.getFrame();
 		
 		if(this.facing == this.FACING_LEFT) {
-			DisplayCTX.drawImage(this.animationSheet,						// Image
+			ctx.drawImage(this.animationSheet,								// Image
 								 this.width*curFrame[1],					// Start X on image
 								 this.height*curFrame[0],					// Start Y on image
 								 this.width, 								// Width in image to display
 								 this.height,								// Height in image to display
-								 this.PosX-BackgX, 							// Position X
+								 this.PosX-game.camera.CameraX, 			// Position X
 								 this.PosY-this.height,						// Position Y
 								 this.width,								// Width to display
 								 this.height);								// Height to display
 		} else {
-			DisplayCTX.save();
-			DisplayCTX.translate(this.width, 0);
-			DisplayCTX.scale(-1, 1);
-			DisplayCTX.drawImage(this.animationSheet, 
+			ctx.save();
+			ctx.translate(this.width, 0);
+			ctx.scale(-1, 1);
+			ctx.drawImage(this.animationSheet, 
 								 this.width*curFrame[1], 
 								 this.height*curFrame[0], 
 								 this.width, 
 								 this.height, 
-								 -(this.PosX-BackgX), 
+								 -(this.PosX-game.camera.CameraX), 
 								 this.PosY-this.height, 
 								 this.width, 
 								 this.height);
-			DisplayCTX.restore();
+			ctx.restore();
 		}
 	},
 	
 	die : function() {
-		var index = EntityList.indexOf(this);
-		EntityList.splice(index, 1);
+		var index = this.world.entities.indexOf(this);
+		this.world.entities.splice(index, 1);
 	},
 	
 	update : function(Delta) {

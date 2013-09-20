@@ -4,8 +4,8 @@ var EntityProjectile = Entity.extend({
 	damage : 25,
 	attack : 0,
 	
-	init: function(image, origin, width, height, RANGE, DAMAGE) {
-		this._super(image, [origin.PosX+(origin.width/2),origin.PosY-(origin.height/2)], width, height, origin.team);
+	init: function(world, image, origin, width, height, RANGE, DAMAGE) {
+		this._super(world, image, [origin.PosX+(origin.width/2),origin.PosY-(origin.height/2)], width, height, origin.team);
 		this.damageModifier = origin.damageModifier;
 		this.startingPoint = this.getProjectilePoint(origin);
 		this.PosX = this.startingPoint[0];

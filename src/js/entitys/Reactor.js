@@ -5,8 +5,8 @@ var EntityReactor = Entity.extend({
 	radiationPulse: 0,
 	enteredConsoleTime: 0,
 	
-	init : function(startPoint) {
-		this._super(sml["empty"], startPoint, 1, 1, Team.SYSTEM);
+	init : function(world, startPoint) {
+		this._super(world, sml["empty"], startPoint, 1, 1, Team.SYSTEM);
 		this.radiationImage = sml["radiation"];
 	},
 	

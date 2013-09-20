@@ -93,7 +93,7 @@ var sound = {
 				this.wasMuted = true;
 			}
 			
-			if(BattleToads.player.PosX >= this.pointStart && BattleToads.player.PosX <= this.pointEnd) {
+			if(game.player.PosX >= this.pointStart && game.player.PosX <= this.pointEnd) {
 				if (!this.playing) {
 					if(this.wasMuted == true && soundsys.musicOn == true && soundsys.BGOn == true) {
 						this.start();
