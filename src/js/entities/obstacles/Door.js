@@ -10,7 +10,7 @@ EntityObstacleDoor = EntityObstacle.extend({
 	
 	update : function() {
 		var player = this.world.getNearestEntity([this.PosX+(this.width/2),this.PosY-(this.height/2)], Team.THE_FRENCH);
-		//console.log(player);
+
 		var deltaX = player.DeltaX(this);
 		var deltaY = player.DeltaX(this.getCollisionHitbox());
 		
@@ -21,6 +21,10 @@ EntityObstacleDoor = EntityObstacle.extend({
             this.world.game.setScreen(new ScreenLockedDoor(this.world.game));
         }
 	},
+	
+	HotFixCol : function() {
+		return this.getCollisionHitbox();
+	}
 	
 	die : function() {
 		this.onDestroyed();

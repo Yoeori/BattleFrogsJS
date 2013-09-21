@@ -18,10 +18,10 @@ Refactor PlayerBullit to Class sys<br />
 Add projectiles<br />
 Add AI<br />
 <del>Refactor Battlefrogs.js, RenderBackground.js and collisions.js to World.js</del><br />
-Add camera<br />
-Add world<br />
+<del>Add camera</del><br />
+<del>Add world</del><br />
 <del>Finish entity abilities</del><br />
-Add obstacles<br />
+<del>Add obstacles</del><br />
 Remove unnecessary code
 
 

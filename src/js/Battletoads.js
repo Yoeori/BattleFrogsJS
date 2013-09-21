@@ -126,7 +126,7 @@ var BattleToads = Class.extend({
 					this.world.addForegroundObject(new ForegroundObject(sml["BakeryWall_door_Broken"], [6030, 0-720], 313, 720));
 				}
 			});
-			this.world.addEntity(new Door_2(this.world, sml["BakeryWall_door_Intact"], [11375, 720], 306, 720, [11375, 400, 11375+120, 400+320]));
+			//this.world.addEntity(new Door_2(this.world, sml["BakeryWall_door_Intact"], [11375, 720], 306, 720, [11375, 400, 11375+120, 400+320]));
 			
 			this.world.addEntity(this.player);
 			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449+49]));
