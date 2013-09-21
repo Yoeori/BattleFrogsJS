@@ -24,6 +24,8 @@ var BattleToads = Class.extend({
 		this.camera = new Camera(this,[this.GAME_WIDTH, this.GAME_HEIGHT]);
 		this.gui = new Gui(this);
 		
+		this.GAME_WIDTH = canvas.width;
+		
 		ObjectT = this;
 		this.GameRenderer = requestAnimationFrame(function() {ObjectT.render();});
 		setInterval(function() {ObjectT.update(15);},15);
