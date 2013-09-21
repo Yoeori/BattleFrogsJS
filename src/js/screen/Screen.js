@@ -44,6 +44,13 @@ var ScreenText = Screen.extend({
 		ctx.fillText(this.text, (canvas.width/2)-(this.textWidth/2), 240-(this.textHeight/2));
 	}
 });
+var ScreenLockedDoor = ScreenText.extend({
+	
+	init : function(game) {
+		this._super(game, this.world.state == State.WEAPON_PICKED_UP ? "This door is locked. Blow it up!" : "This door is locked. You need to find the key.");
+	}
+	
+});
 
 var ScreenWin = Screen.extend({
 	

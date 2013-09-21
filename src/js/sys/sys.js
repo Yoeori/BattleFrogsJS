@@ -1,3 +1,6 @@
+var canvas = document.getElementById('GameCanvas');
+var ctx = canvas.getContext('2d');
+var DeltaTime = Date.now();
 function NextGaussian() {
 	return (Math.random()*2-1)+(Math.random()*2-1)+(Math.random()*2-1);
 }
@@ -56,7 +59,7 @@ function init() {
 function Ticker() {
 	ReadFPS();
 	GameFPStick = setInterval(function() {
-		if(!paused)
+		if(!game.paused)
 			ReadFPS();
 	},1000);
 	GameTick = setInterval(function() {
@@ -74,3 +77,6 @@ function ReadTick() {
 	document.getElementById("Tick").innerHTML = Tick+"%";
 	Tick = 0;
 }
+window.onfocus = function() { game.paused = false; };
+window.onblur = function() { game.paused = true; };
+

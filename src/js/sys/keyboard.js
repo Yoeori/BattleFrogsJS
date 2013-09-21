@@ -335,7 +335,8 @@ document.documentElement.onkeydown = function(e) {
 	} else if(e) {
 		keycode = e.which;
 	}
-    game.keyPressed(keycode);
+	if(imagesloaded == "done" && soundloaded == true)
+    	game.keyPressed(keycode);
 }
 
 document.documentElement.onkeyup = function(e) {
@@ -345,5 +346,6 @@ document.documentElement.onkeyup = function(e) {
 	} else if(e){
 		keycode = e.which;
 	}
-	game.keyboard.onKeyUp(keycode);
+	if(imagesloaded == "done" && soundloaded == true)
+		game.keyboard.onKeyUp(keycode);
 }

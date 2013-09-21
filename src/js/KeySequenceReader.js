@@ -17,7 +17,6 @@ var KeySequenceReader = {
 		
 	},
 	
-	
 	getFullyMatchingSequence : function() {
 		for (var i = 0; i < this.sequences.length; i++) {
             if(this.currentSequence == this.sequences[i].text) {
@@ -48,10 +47,6 @@ var KeySequenceReader = {
 		}
 		
 	})
-	
-	
-	
-	
 }
 KeySequenceReader.sequences.push(new KeySequenceReader.Sequence("krislovesjulia",function() {
 	game.player.hasgun = true;

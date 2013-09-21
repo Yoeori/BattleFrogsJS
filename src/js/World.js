@@ -68,7 +68,10 @@ var World = Class.extend({
 		}
 		if(this.game.ALLOW_DEBUGGING)
 			this.rendercollision(camera);
-
+		
+		for (var i = 0; i < this.foregroundObjects.length; i++) {
+            this.foregroundObjects[i].render(camera);
+		}
 	},
 	
 	rendercollision : function(camera) {
@@ -100,6 +103,15 @@ var World = Class.extend({
 	
 	addEntity : function(ent) {
 		this.entities.push(ent);
+	},
+	
+	addForegroundObject : function(foregroundObject) {
+        this.foregroundObjects.push(foregroundObject);
+    },
+	
+	removeForegroundObject : function(foregroundObject) {
+		var index = this.world.foregroundObjects.indexOf(foregroundObject);
+		this.world.foregroundObjects.splice(index, 1);
 	},
 	
 	getCollidingEntities : function(Point) {

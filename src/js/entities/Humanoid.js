@@ -1,0 +1,3 @@
+var EntityHumanoid = Entity.extend({
+	
+});

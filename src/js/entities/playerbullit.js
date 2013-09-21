@@ -31,13 +31,13 @@
 	
 	this.render = function(delta) {
 		if(this.facing == "right") {
-			DisplayCTX.drawImage(sml["missile"], this.PosX-BackgX, this.PosY-this.height);
+			ctx.drawImage(sml["missile"], this.PosX-game.camera.CameraX, this.PosY-this.height);
 		} else {
-			DisplayCTX.save();
-			DisplayCTX.translate(sml["missile"].width, 0);
-			DisplayCTX.scale(-1, 1);
-			DisplayCTX.drawImage(sml["missile"], -this.PosX+BackgX, this.PosY-this.height);
-			DisplayCTX.restore();
+			ctx.save();
+			ctx.translate(sml["missile"].width, 0);
+			ctx.scale(-1, 1);
+			ctx.drawImage(sml["missile"], -this.PosX+game.camera.CameraX, this.PosY-this.height);
+			ctx.restore();
 		}
 	}
 	
@@ -55,7 +55,7 @@
 		
 		newX = this.velocityX + this.PosX;
 
-		if(checkCollision(newX, this.PosY, this.width, this.height)) {
+		if(game.world.checkCollision(newX, this.PosY, this.width, this.height)) {
 			this.kill();
 		}
 		

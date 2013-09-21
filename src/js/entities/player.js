@@ -64,9 +64,9 @@ var EntityPlayer = Entity.extend({
 				this.isLeftShooting = true;
 			}
 			if(this.facing != this.FACING_LEFT) {
-				EntityList.push(new PlayerBullit(this.PosX+this.width-20-48,this.PosY-(this.height/2)+6,"right"));
+				this.world.addEntity(new PlayerBullit(this.PosX+this.width-20-48,this.PosY-(this.height/2)+6,"right"));
 			} else {
-				EntityList.push(new PlayerBullit(this.PosX+24,this.PosY-(this.height/2)+6,"left"));
+				this.world.addEntity(new PlayerBullit(this.PosX+24,this.PosY-(this.height/2)+6,"left"));
 			}
 			this.hasAttackHappened = true;
 			

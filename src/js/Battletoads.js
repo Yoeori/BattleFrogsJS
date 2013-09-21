@@ -1,11 +1,3 @@
-var canvas = document.getElementById('GameCanvas');
-var ctx = canvas.getContext('2d');
-var paused = false;
-var DeltaTime = Date.now();
-
-window.onfocus = function() { paused = false; };
-window.onblur = function() { paused = true; };
-
 Team = Object.freeze({
 	THE_FRENCH: 0,
 	THE_FROG_PIRATES: 1,
@@ -21,7 +13,7 @@ var BattleToads = Class.extend({
 	paused : false,
 	player : 0,
 	gui : 0,
-	ALLOW_DEBUGGING : true,
+	ALLOW_DEBUGGING : false,
 	GameRenderer : 0,
     keyboard : 0,
 	world : 0,
@@ -61,7 +53,7 @@ var BattleToads = Class.extend({
 			this.world.update(deltaTime);
 		
 		for(var i = 0; i < sound.BgMusic.length; i++) {
-			//sound.BgMusic[i].update();
+			sound.BgMusic[i].update();
 		}
 		
 		if(this.screen != 0) 
@@ -87,7 +79,18 @@ var BattleToads = Class.extend({
 	},
 	
 	keyPressed : function(e) {
-		KeySequenceReader.appendChar(e);
+		if(e == 115) {		  //F4
+			sound.toggleBG();
+		} else if(e == 118) { //F7
+			this.ALLOW_DEBUGGING = !this.ALLOW_DEBUGGING;
+		} else if(e == 119) { //F8
+			sound.toggle();
+		} else if(e == 120) { //F9
+			this.setPlaying(false);
+			this.setPlaying(true);
+		} else {
+			KeySequenceReader.appendChar(e);
+		}
 		this.keyboard.onKeyDown(e);
 	},
 	
@@ -107,9 +110,31 @@ var BattleToads = Class.extend({
 			
 			this.loadCollisions();
 			
+			var Door_1 = EntityObstacleDoor.extend({
+				onDestroyed : function() {
+					this.world.setState(State.CRYO_DOOR_BLOWN);
+					this.world.addForegroundObject(new ForegroundObject(sml["IntoRift_door_Broken"], [6030, 0-720], 313, 720));
+				}
+			});
+			this.world.addEntity(new Door_1(this.world, sml["IntoRift_door_Intact"], [6030, 720], 313, 720, [6130, 400, 6130+120, 400+320]));
+			
+			var intactBakeryDoorForeground = new ForegroundObject(sml["BakeryWall_door_Intact"], [11375, 0], 306, 720);
+			
+			var Door_2 = EntityObstacleDoor.extend({
+				onDestroyed : function() {
+					this.world.removeForegroundObject(intactBakeryDoorForeground);
+					this.world.addForegroundObject(new ForegroundObject(sml["BakeryWall_door_Broken"], [6030, 0-720], 313, 720));
+				}
+			});
+			this.world.addEntity(new Door_2(this.world, sml["BakeryWall_door_Intact"], [11375, 720], 306, 720, [11375, 400, 11375+120, 400+320]));
+			
 			this.world.addEntity(this.player);
 			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449+49]));
 			this.world.addEntity(new EntityPickupWeapon(this.world, [14000, 430+36]));
+			
+			this.world.addForegroundObject(new ForegroundObject(sml["LeaveCryo_Door_Broken"], [8040, 0], 211, 720));
+			this.world.addForegroundObject(intactBakeryDoorForeground);
+			
 			this.setScreen(new ScreenText(this, "Use WASD/Arrow keys to move and jump. Yay"));
 		}
 	},

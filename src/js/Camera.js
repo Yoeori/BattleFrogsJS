@@ -18,6 +18,12 @@ Camera = Class.extend({
 		if (x > (bounds[0] - 1280))
 			x = (bounds[0] - 1280);
 		
+		if(this.game.player.isLeftShooting) {
+			x += 48/2;
+		} else if(this.game.player.isAttacking) {
+			x -= 48/2;
+		}
+		
 		this.CameraX = x;
 		return x;
 		
