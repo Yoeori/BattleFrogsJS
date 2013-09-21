@@ -17,7 +17,7 @@ Add Enemys<br />
 Refactor PlayerBullit to Class sys<br />
 Add projectiles<br />
 Add AI<br />
-Refactor Battlefrogs.js, RenderBackground.js and collisions.js to World.js<br />
+<del>Refactor Battlefrogs.js, RenderBackground.js and collisions.js to World.js</del><br />
 Add camera<br />
 Add world<br />
 <del>Finish entity abilities</del><br />
