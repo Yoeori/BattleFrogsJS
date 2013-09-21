@@ -24,7 +24,7 @@ EntityObstacleDoor = EntityObstacle.extend({
 	
 	HotFixCol : function() {
 		return this.getCollisionHitbox();
-	}
+	},
 	
 	die : function() {
 		this.onDestroyed();
