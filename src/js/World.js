@@ -20,6 +20,7 @@ var World = Class.extend({
 	easterEgg : 0,
 	size : [],
 	game : 0,
+	obstacles : [],
 	
 	init : function(game,size) {
 		this.game = game;
@@ -110,8 +111,8 @@ var World = Class.extend({
     },
 	
 	removeForegroundObject : function(foregroundObject) {
-		var index = this.world.foregroundObjects.indexOf(foregroundObject);
-		this.world.foregroundObjects.splice(index, 1);
+		var index = this.foregroundObjects.indexOf(foregroundObject);
+		this.foregroundObjects.splice(index, 1);
 	},
 	
 	getCollidingEntities : function(Point) {
@@ -142,13 +143,13 @@ var World = Class.extend({
 		}
 	},
 	
-	checkCollision : function(x, y, width, height,platform) {
+	isCollision : function(entity, x, y, width, height,platform) {
 		var player = new Array(x, y-height, x+width, y);
 		if(this.game.ALLOW_DEBUGGING) {
 			ctx.strokeStyle="#FFF";
 			ctx.strokeRect(x - this.game.camera.CameraX,y-height,width,height);
 		}
-		var isCollision = false;
+
 		for(var i = 0; i < this.collisions.length; i++) {
 			collision = this.collisions[i];
 			if(collision[1] != collision[3]) {
@@ -162,6 +163,15 @@ var World = Class.extend({
 				}
 			}
 		}
+		
+		for(var i = 0; i < this.obstacles.length; i++) {
+			obstacle = this.obstacles[i].getCollisionHitbox();
+			if(player[2] > obstacle[0] && player[0] < obstacle[2] && player[3] > obstacle[1] && player[1] < obstacle[3]) {
+				entity.onObstacleCollision(this.obstacles[i]);
+				return true;
+			}
+		}
+		return false;
 	},
 	
 	hasPirates : function() {

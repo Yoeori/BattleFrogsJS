@@ -63,11 +63,7 @@ var EntityPlayer = Entity.extend({
 				this.PosX -= 48;
 				this.isLeftShooting = true;
 			}
-			if(this.facing != this.FACING_LEFT) {
-				this.world.addEntity(new PlayerBullit(this.PosX+this.width-20-48,this.PosY-(this.height/2)+6,"right"));
-			} else {
-				this.world.addEntity(new PlayerBullit(this.PosX+24,this.PosY-(this.height/2)+6,"left"));
-			}
+			this.world.addEntity(new EntityProjectileMissile(this.world, this));
 			this.hasAttackHappened = true;
 			
 		}

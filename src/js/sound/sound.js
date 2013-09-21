@@ -126,7 +126,9 @@ var sound = {
 				this.playing = true;
 			}
 			this.level += 1;
-			this.music.volume = this.level/100;
+			
+			if(this.level <= 100 && this.level >= 0)
+				this.music.volume = this.level/100;
 
 			if(this.level < 100 && this.current == "in") {
 				setTimeout(function() { object.fadeInN(object); },30);
@@ -138,7 +140,9 @@ var sound = {
 				this.playing = false;
 			}
 			this.level = this.level-1;
-			this.music.volume = this.level/100;
+			
+			if(this.level <= 100 && this.level >= 0)
+				this.music.volume = this.level/100;
 
 			if(this.level > 1 && this.current == "out") {
 				setTimeout(function() { object.fadeOutN(object); },30);

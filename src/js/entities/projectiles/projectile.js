@@ -18,23 +18,19 @@ var EntityProjectile = Entity.extend({
 		this.facing = origin.facing;
 		this.flying = true;
 	},
-	
-	render : function() {
-		DisplayCTX.drawImage(this.image,200,200);
-	},
 
 	update: function(Delta) {
 		this.velocityX += this.horizontalSpeed;
 		this.move();
 		
 		
-		if(new date().getTime()-this.lifestart >= this.getMaxLifeTime()) {
+		if(new Date().getTime()-this.lifestart >= this.getMaxLifeTime()) {
 			this.die();
 		}
 		
 	},
 	
-	onCollision : function(collidedHorizontally,collidedVertically){
+	onCollision : function(collidedHorizontally, collidedVertically){
 		this.die();
 	},
 	

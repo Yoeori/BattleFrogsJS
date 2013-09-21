@@ -30,7 +30,9 @@ loadimages = new Array(	new Array("bg","bg"),
 						"croissant",
 					   
 					    "win",
-					    "gameover"
+					    "gameover",
+					    "explosion_tadpole",
+					    "explosion_splatter"
 					   );
 var sml = new Array();
 imagesloaded = 0;

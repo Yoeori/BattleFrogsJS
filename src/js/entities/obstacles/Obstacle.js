@@ -6,12 +6,12 @@ EntityObstacle = Entity.extend({
 		this._super(world, image, startingPoint, width, height, team);
 		this.collisionBox = [];
 		this.collisionBox = pcollisionBox;
-		this.world.collisions.push(this.collisionBox);
+		this.world.obstacles.push(this);
 	},
 	
 	die : function() {
-		var index = this.world.collisions.indexOf(this.collisionBox);
-		this.world.collisions.splice(index, 1);
+		var index = this.world.obstacles.indexOf(this);
+		this.world.obstacles.splice(index, 1);
 		this._super();
 	},
 	

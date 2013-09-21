@@ -37,6 +37,7 @@ var Entity = Class.extend({
 	invulnerable: false,
 	
 	inversegravity : false,
+	RenderDiff : false,
 	
 	init : function(world, image, startingPoint, width, height, team) {
 		this.animationSheet = image;
@@ -56,7 +57,7 @@ var Entity = Class.extend({
 		
 		var curFrame = this.getFrame();
 		
-		if(this.facing == this.FACING_LEFT) {
+		if((this.facing == this.FACING_LEFT && !this.RenderDiff) || (this.facing == this.FACING_RIGHT && this.RenderDiff)) {
 			ctx.drawImage(this.animationSheet,								// Image
 								 this.width*curFrame[1],					// Start X on image
 								 this.height*curFrame[0],					// Start Y on image
@@ -114,22 +115,22 @@ var Entity = Class.extend({
         var collidedVertically = false;
         var onFloor = false;
 		
-		if(!this.world.checkCollision(newX, this.PosY, this.width, this.height, false)) {
+		if(!this.world.isCollision(this, newX, this.PosY, this.width, this.height, false)) {
 			this.PosX = newX;
 		} else {
 			this.velocityX = 0;
 			collidedHorizontally = true;
 		}
 		if(this.velocityY < 0) {
-			if(!this.world.checkCollision(this.PosX, newY, this.width, this.height, false)) {
+			if(!this.world.isCollision(this, this.PosX, newY, this.width, this.height, false)) {
 				this.PosY = newY;
 			} else {
 				collidedVertically = true;
 			}
 		} else {
-			if(!this.world.checkCollision(this.PosX, newY, this.width, Math.max(this.velocityY, 0.75), true)) {
+			if(!this.world.isCollision(this, this.PosX, newY, this.width, Math.max(this.velocityY, 0.75), true)) {
 				this.PosY = newY;
-				if(this.world.checkCollision(this.PosX, newY+1, this.width, this.velocityY+10, true)) {
+				if(this.world.isCollision(this, this.PosX, newY+1, this.width, this.velocityY+10, true)) {
 					onFloor = true;
 				}
 			} else {
