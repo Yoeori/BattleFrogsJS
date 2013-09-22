@@ -22,6 +22,54 @@ function ajaxRequest(url,vars,callbackFunction) {
 	}
 	request.send(vars);
 }
+/* based on slick2d Geom Rectangle Intersect */
+function intersects(shape1, shape2) {
+	if(shape1.length == 4 && shape2.length == 4) {
+		
+		//Rect - Rect
+		if ((shape1[0] > (shape2[0] + shape2[2])) || ((shape1[0] + shape1[2]) < shape2[0]))
+			return false;
+		if ((shape1[1] > (shape2[1] + shape2[3])) || ((shape1[1] + shape1[3]) < shape2[1]))
+			return false;
+		return true;
+		
+	} else if((shape1.length == 3 && shape2.length == 4) || (shape1.length == 4 && shape2.length == 3)) {
+		
+		//Circle - Rect
+		if(shape1.length == 3){ var circle = shape1; var rect = shape2; }
+		else { var circle = shape2; var rect = shape1; }
+		
+		if (circle[0]  < rect[0])
+			var closestX = rect[0];
+		else if(circle[0]  > rect[0] + rect[2])
+			var closestX = rect[0] + rect[2];
+		else
+			var closestX = circle[0];
+		
+		if (circle[1] < rect[1])
+			var closestY = rect[1];
+		else if(circle[1] > rect[1] + rect[3])
+			var closestY = rect[1] + rect[3];
+		else
+			var closestY = circle[1];
+		
+		var distance = distanceSquared([circle[0], circle[1]], [closestX, closestY]);
+		if (distance < circle[2])
+			return true;
+		else
+			return false;
+		
+	} else {
+		console.log("Can't check collision");
+		return false;
+	}
+}
+function distanceSquared(fromXY, toXY) {
+	var a = fromXY[0] - toXY[0];
+    var b = fromXY[1] - toXY[1];
+	
+	return Math.sqrt((a * a) + (b * b));
+}
 function getTextSize(text) {
 		var who = document.createElement('div');
 		who.style.cssText='display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:30px; font-family: verdana;';
@@ -30,19 +78,6 @@ function getTextSize(text) {
 		var fs = [who.offsetWidth, who.offsetHeight];
 		document.body.removeChild(who);
 		return fs;
-}
-function distanceSquared(E1,E2) {
-	if(E1[0] > E2[0])
-		var dx = E1[0]-E2[0];
-	else
-		var dx = E2[0]-E1[0];
-	
-	if(E1[1] > E2[1])
-		var dy = E1[1]-E2[1];
-	else
-		var dy = E2[1]-E1[1];
-
-	return (dx*dx)+(dy*dy);
 }
 var game, gameStarter;
 var LoadColl = 0;
@@ -79,4 +114,10 @@ function ReadTick() {
 }
 window.onfocus = function() { game.paused = false; };
 window.onblur = function() { game.paused = true; };
+/*
+		  ctx.beginPath();
+		  ctx.arc(5000-this.camera.CameraX, 200, 120, 0, 2 * Math.PI, false);
+		  ctx.fillStyle = 'black';
+		  ctx.fill();
+*/
 

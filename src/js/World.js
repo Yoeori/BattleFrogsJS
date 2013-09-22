@@ -79,13 +79,25 @@ var World = Class.extend({
 		for(var i = 0; i < this.collisions.length; i++) {
 			collision = this.collisions[i];
 			ctx.strokeStyle="#000";
-			ctx.strokeRect(collision[0] - camera.CameraX, collision[1], collision[2] - collision[0] - 4, collision[3] - collision[1]);
+			ctx.strokeRect(collision[0] - camera.CameraX, 
+						   collision[1], 
+						   collision[2], 
+						   collision[3]);
+		}
+		for(var i = 0; i < this.obstacles.length; i++) {
+			obstacle = this.obstacles[i];
+			ctx.strokeStyle="#000";
+			ctx.strokeRect(obstacle[0] - camera.CameraX, 
+						   obstacle[1], 
+						   obstacle[2], 
+						   obstacle[3]);
 		}
 		for(var i=0; i < this.entities.length; i++) {
-			if(this.entities[i] != null) {
-				ctx.strokeStyle="#FFF";
-				ctx.strokeRect(this.entities[i].PosX - camera.CameraX,this.entities[i].PosY - this.entities[i].height,this.entities[i].width,this.entities[i].height);
-			}
+			ctx.strokeStyle="#FFF";
+			ctx.strokeRect(this.entities[i].PosX  - camera.CameraX, 
+						   this.entities[i].PosY,
+						   this.entities[i].width,
+						   this.entities[i].height);
 		}
 	},
 	
@@ -115,58 +127,45 @@ var World = Class.extend({
 		this.foregroundObjects.splice(index, 1);
 	},
 	
-	getCollidingEntities : function(Point) {
-		if(Point.length == 4) {
-			Entitycheck = [Point[0], Point[1]-Point[3], Point[0]+Point[2], Point[1]];
-			Entitycolidedlist = [];
-			for(var i = 0; i < this.entities.length; i++) {
-				if(Entitycheck[2] > this.entities[i].PosX && Entitycheck[0] < (this.entities[i].width+this.entities[i].PosX) && Entitycheck[3] > (this.entities[i].PosY-this.entities[i].height) && Entitycheck[1] < this.entities[i].PosY) {
-					Entitycolidedlist.push(this.entities[i]);
-				}
+	getCollidingEntities : function(entity) {
+		var collisions = [];
+		for(var i = 0; i < this.entities.length; i++) {
+			var otherEntity = this.entities[i];
+			if (otherEntity != entity && !otherEntity.ignoreCollision()) {
+				if (intersects(entity.getPosition(), otherEntity.getPosition())) {
+                    collisions.push(otherEntity);
+                }
 			}
-			return Entitycolidedlist;
-		} else if(Point.length == 3) {
-			Entitycolidedlist = [];
-			for(var i = 0; i < EntityList.length; i++) {
-				//Check circle collision
-				var dx = Point[0]-(this.entities[i].PosX+(this.entities[i].width/2));
-				var dy = Point[1]-(this.entities[i].PosX-(this.entities[i].height/2))
-				var distance = Math.sqrt((dx*dx)+(dy*dy));
-				if(distance >= Point[2]) {
-					Entitycolidedlist.push(this.entities[i]);
-				}
-			}
-			return Entitycolidedlist;
-		} else {
-			Entitycolidedlist = [];
-			return Entitycolidedlist;
 		}
+		return collisions;
 	},
 	
-	isCollision : function(entity, x, y, width, height,platform) {
-		var player = new Array(x, y-height, x+width, y);
-		if(this.game.ALLOW_DEBUGGING) {
-			ctx.strokeStyle="#FFF";
-			ctx.strokeRect(x - this.game.camera.CameraX,y-height,width,height);
-		}
-
-		for(var i = 0; i < this.collisions.length; i++) {
-			collision = this.collisions[i];
-			if(collision[1] != collision[3]) {
-				if(player[2] > collision[0] && player[0] < collision[2] && player[3] > collision[1] && player[1] < collision[3]) {
-					return true;
-				}
+	getCollidingEntitiesShape : function(shape) {
+		var collisions = [];
+		for(var i = 0; i < this.entities.length; i++) {
+			var otherEntity = this.entities[i];
+			if (!otherEntity.ignoreCollision()) {
+				if (intersects(shape, otherEntity.getPosition())) {
+                    collisions.push(otherEntity);
+                }
 			}
-			if(platform) {
-				if(player[2] > collision[0] && player[0] < collision[2] && player[3] > collision[1] && player[1] < collision[3]) {
-					return true;
-				}
+		}
+		return collisions;
+	},
+	
+	isCollision : function(entity, entityCollisionBox, forGravity) {
+		for(var i = 0; i < this.collisions.length; i++) {
+			collidable = this.collisions[i];
+			if (collidable[3] == 0 && !forGravity) continue;
+			
+			if(intersects(entityCollisionBox, collidable)) {
+				return true;
 			}
 		}
 		
 		for(var i = 0; i < this.obstacles.length; i++) {
 			obstacle = this.obstacles[i].getCollisionHitbox();
-			if(player[2] > obstacle[0] && player[0] < obstacle[2] && player[3] > obstacle[1] && player[1] < obstacle[3]) {
+			if(intersects(entityCollisionBox, obstacle)) {
 				entity.onObstacleCollision(this.obstacles[i]);
 				return true;
 			}

@@ -12,6 +12,8 @@ var EntityPlayer = Entity.extend({
 	animate : [5, 2, 2, 7, 6],
 	animationframerate : [83, 83, 166, 166, 83],
 	
+	STARTING_X : 6470,
+	
 	hasgun: false,
 	lastAutoHeal: 0,
 	isLeftShooting: false,
@@ -24,8 +26,8 @@ var EntityPlayer = Entity.extend({
 	hasAttackHappened : false,
 	
 	
-	init: function(world, x, y) {
-		this._super(world, sml["player"], [x, y], 152, 195, Team.THE_FRENCH);
+	init: function(world, image, width, height) {
+		this._super(world, image, [this.STARTING_X, world.FLOOR_LEVEL-height], width, height, Team.THE_FRENCH);
 		this.horizontalSpeed = 8;
 		this.fullHealth = 200;
 		this.currentHealth = this.fullHealth;

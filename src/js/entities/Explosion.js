@@ -15,7 +15,7 @@ var EntityExplosion = Entity.extend({
 	maxLifetime : 0,
 	
 	init : function(world, startingPoint, type) {
-		this._super(world, sml[this.FILENAME[type]], [startingPoint[0] - this.FRAME_WIDTH[type]/2, startingPoint[1] + this.FRAME_HEIGHT[type]/2], this.FRAME_WIDTH[type], this.FRAME_HEIGHT[type], Team.SYSTEM);
+		this._super(world, sml[this.FILENAME[type]], [startingPoint[0] - this.FRAME_WIDTH[type]/2, startingPoint[1] - this.FRAME_HEIGHT[type]/2], this.FRAME_WIDTH[type], this.FRAME_HEIGHT[type], Team.SYSTEM);
 		
 		var variation = 5;
 		this.PosX = this.PosX + Math.random() * variation * 2 - variation;

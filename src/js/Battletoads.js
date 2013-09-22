@@ -39,11 +39,19 @@ var BattleToads = Class.extend({
 		} else {
 			Object = this;
 			ajaxRequest("acties/collisions.txt","",function(reply) {
-				var splited = reply.split(",");
-				for(var i=0; i < splited.length; i++) {
-					var splitedar = splited[i].split("|")
-					Object.world.addCollision(splitedar);
-					
+				collisionsplit_1 = reply.split("\n");
+				for(var i = 0; i < collisionsplit_1.length; i++) {
+					if(collisionsplit_1[i].indexOf("#") === 0 || collisionsplit_1[i] == "") {
+					} else {
+						pushObject = collisionsplit_1[i].split("\ ");
+						if(pushObject.length == 4){
+							finalObj = [];
+							for(var b = 0; b < 4; b++) {
+								finalObj.push(parseInt(pushObject[b]));
+							}
+							Object.world.addCollision(finalObj);
+						}
+					}
 				}
 			});
 		}
@@ -108,7 +116,7 @@ var BattleToads = Class.extend({
 		if(playing) {
 			this.startTime = Math.round(new Date().getTime());
 			this.world = new World(this, [14709, 720]);
-			this.player = new EntityPlayer(this.world, 6470, 672);
+			this.player = new EntityPlayer(this.world, sml["player"], 152, 195);
 			
 			this.loadCollisions();
 			
@@ -118,7 +126,7 @@ var BattleToads = Class.extend({
 					this.world.addForegroundObject(new ForegroundObject(sml["IntoRift_door_Broken"], [6030, 0], 313, 720));
 				}
 			});
-			this.world.addEntity(new Door_1(this.world, sml["IntoRift_door_Intact"], [6030, 720], 313, 720, [6130, 400, 6130+120, 400+320]));
+			this.world.addEntity(new Door_1(this.world, sml["IntoRift_door_Intact"], [6030, 0], 313, 720, [6130, 400, 120, 320]));
 			
 			var intactBakeryDoorForeground = new ForegroundObject(sml["BakeryWall_door_Intact"], [11375, 0], 306, 720);	
 			var Door_2 = EntityObstacleDoor.extend({
@@ -127,18 +135,18 @@ var BattleToads = Class.extend({
 					this.world.addForegroundObject(new ForegroundObject(sml["BakeryWall_door_Broken"], [11375, 0], 306, 720));
 				}
 			});
-			this.world.addEntity(new Door_2(this.world, sml["BakeryWall_door_Intact"], [11375, 720], 306, 720, [11375, 400, 11375+120, 400+320]));
+			this.world.addEntity(new Door_2(this.world, sml["BakeryWall_door_Intact"], [11375, 0], 306, 720, [11375, 400, 120, 320]));
 			
 			var Door_3 = EntityObstacleDoor.extend({
 				onDestroyed : function() {
 					this.world.addForegroundObject(new ForegroundObject(sml["Reactor_door_Broken"], [2135, 0], 502, 720));
 				}
 			});
-			this.world.addEntity(new Door_3(this.world, sml["Reactor_door_Intact"], [2135, 720], 502, 720, [2135, 400, 2135+120, 400+320]));
+			this.world.addEntity(new Door_3(this.world, sml["Reactor_door_Intact"], [2135, 0], 502, 720, [2135, 400, 120, 320]));
 			
 			this.world.addEntity(this.player);
-			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449+49]));
-			this.world.addEntity(new EntityPickupWeapon(this.world, [14000, 430+36]));
+			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449]));
+			this.world.addEntity(new EntityPickupWeapon(this.world, [14000, 430]));
 			
 			this.world.addForegroundObject(new ForegroundObject(sml["LeaveCryo_Door_Broken"], [8040, 0], 211, 720));
 			this.world.addForegroundObject(intactBakeryDoorForeground);

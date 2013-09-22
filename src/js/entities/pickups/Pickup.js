@@ -4,7 +4,7 @@ var EntityPickup = Entity.extend({
 		this.move();
 		
 		//check entity collision
-		ColidEnt = this.world.getCollidingEntities(this.getPickupHitbox());
+		ColidEnt = this.world.getCollidingEntitiesShape(this.getPickupHitbox());
 		for(var i = 0; i < ColidEnt.length; i++) {
 			if(ColidEnt[i] != this && this.isEligible(ColidEnt[i])) {
 				this.applyEffect(ColidEnt[i]);
@@ -26,7 +26,5 @@ var EntityPickup = Entity.extend({
 		// NOOO DON'T DECREASE MY HEALTH
 	},
 	
-	applyEffect : function(Effentity) {
-
-	}
+	applyEffect : function(Effentity) {}
 });

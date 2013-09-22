@@ -10,16 +10,16 @@ var EntityProjectileMissile = EntityProjectile.extend({
 	
 	die : function() {
 		//Create explosion and shizzle (not yet implemented)
-		var point = [this.facing == this.FACING_LEFT ? this.PosX : this.PosX+this.width, this.PosY-this.height/2];
+		var point = [this.facing == this.FACING_LEFT ? this.PosX : this.PosX+this.width, this.PosY+this.height/2];
 		this.world.addEntity(new EntityExplosion(this.world, point, 0));
 		this._super();
 	},
 	
 	getProjectilePoint : function(entity) {
 		if(entity.facing == 1) {
-			return [entity.PosX+entity.width-48, entity.PosY- (entity.height/2) + 23/2];
+			return [entity.PosX+entity.width-48, entity.PosY + (entity.height/2) - 23];
 		} else {
-			return [entity.PosX-48/4, entity.PosY - (entity.height/2) + 23/2];
+			return [entity.PosX-48/4, entity.PosY + (entity.height/2) - 23];
 		}
 	}
 	

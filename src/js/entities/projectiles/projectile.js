@@ -5,11 +5,13 @@ var EntityProjectile = Entity.extend({
 	attack : 0,
 	
 	init: function(world, image, origin, width, height, RANGE, DAMAGE) {
-		this._super(world, image, [origin.PosX+(origin.width/2),origin.PosY-(origin.height/2)], width, height, origin.team);
+		this._super(world, image, [origin.PosX+(origin.width/2),origin.PosY+(origin.height/2)], width, height, origin.team);
 		this.damageModifier = origin.damageModifier;
 		this.startingPoint = this.getProjectilePoint(origin);
 		this.PosX = this.startingPoint[0];
 		this.PosY = this.startingPoint[1];
+		this.startX = this.startingPoint[0];
+		this.startY = this.startingPoint[1];
 		this.range = RANGE;
 		this.damage = DAMAGE;
 		this.width = width;
@@ -28,6 +30,22 @@ var EntityProjectile = Entity.extend({
 			this.die();
 		}
 		
+		var collisionEntities = this.world.getCollidingEntities(this);
+		for (var i = 0; i < collisionEntities.length; i++) {
+			if (entity.team != this.team) {
+				this.dealDamage(entity);
+				if (entity instanceof Enemy) {
+					sound.play("Frog_Exploding");
+				}
+				this.die();
+				return;
+			}
+		}
+		
+		if(this.facing == this.FACING_RIGHT && this.PosX >= (this.startX+this.range))
+			this.die();
+		else if(this.facing == this.FACING_LEFT && (this.PosX + this.width) <= (this.startX-this.range))
+			this.die();
 	},
 	
 	onCollision : function(collidedHorizontally, collidedVertically){

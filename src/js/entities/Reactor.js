@@ -15,43 +15,43 @@ var EntityReactor = Entity.extend({
 		this.radiationPulse = NextGaussian() * Math.sin(life) * 0.05;
 		
 		if(this.radiation > 0) {
-			var colEntitys = world.getCollidingEntities(this.getRadiationHitbox());
-            var max = this.radiationImage.width * 3 / 2;
-            var ourPos = [this.PosX,this.PosY];
-            for(var i = 0; i < colEntitys.length; i++) {
-                if(colEntitys[i] == this) continue;
-                var entityPos = [colEntitys[i].PosX+(EntityList[i].width/2),colEntitys[i].PosY+(colEntitys[i].height/2)];
-                var dx = entityPos[0]-ourPos[0];
-                var dy = entityPos[1]-ourPos[1];
-                var amount = Math.sqrt((dx*dx)+(dy*dy));
-                if(amount > max) amount = max;
-                amount /= max;
-                amount = 1 - amount;
-                colEntitys[i].radiate(this, amount);
-            }
-		} else if(worldState.state == worldState.RADIATION_CLEARED) {
-            var colEntitys = world.getCollidingEntities(this.getRadiationHitbox());
-            var foundPlayer = false;
-            for(var i = 0; i < colEntitys.length; i++) {
-                if(colEntitys[i] instanceof EntityPlayer) {
-                    foundPlayer = true;
-                    break;   
-                }
-            }
-            if (this.enteredConsoleTime > 0 && !foundPlayer) {
-                this.enteredConsoleTime = 0;
-            } else if (this.enteredConsoleTime >= 0 && foundPlayer) {
-                this.enteredConsoleTime += Delta;
-                if(this.enteredConsoleTime >= this.CONSOLE_ACTIVATION_TIME) {
-                    this.enteredConsoleTime = 0;
-                    if(this.world.hasPirates()) {
-                        worldState.set(worldState.ENGINES_ON);
-                    } else {
-                        worldState.set(worldState.WIN);
-                    }
-                }
-            }
-        }
+			var colEntitys = world.getCollidingEntitiesShape(this.getRadiationHitbox());
+			var max = this.radiationImage.width * 3 / 2;
+			var ourPos = [this.PosX,this.PosY];
+			for(var i = 0; i < colEntitys.length; i++) {
+				if(colEntitys[i] == this) continue;
+				var entityPos = [colEntitys[i].PosX+(EntityList[i].width/2),colEntitys[i].PosY+(colEntitys[i].height/2)];
+				var dx = entityPos[0]-ourPos[0];
+				var dy = entityPos[1]-ourPos[1];
+				var amount = Math.sqrt((dx*dx)+(dy*dy));
+				if(amount > max) amount = max;
+				amount /= max;
+				amount = 1 - amount;
+				colEntitys[i].radiate(this, amount);
+			}
+		} else if(this.world.state == State.RADIATION_CLEARED) {
+			var colEntitys = world.getCollidingEntitiesShape(this.getRadiationHitbox());
+			var foundPlayer = false;
+			for(var i = 0; i < colEntitys.length; i++) {
+				if(colEntitys[i] instanceof EntityPlayer) {
+					foundPlayer = true;
+					break;   
+				}
+			}
+			if (this.enteredConsoleTime > 0 && !foundPlayer) {
+				this.enteredConsoleTime = 0;
+			} else if (this.enteredConsoleTime >= 0 && foundPlayer) {
+				this.enteredConsoleTime += Delta;
+				if(this.enteredConsoleTime >= this.CONSOLE_ACTIVATION_TIME) {
+					this.enteredConsoleTime = 0;
+					if(this.world.hasPirates()) {
+						this.world.setState(State.ENGINES_ON);
+					} else {
+						this.world.setState(State.WIN);
+					}
+				}
+			}
+		}
 	},
 	
 	shrinkRadiation: function() {
@@ -63,24 +63,20 @@ var EntityReactor = Entity.extend({
 	},
     
     getRadiationHitbox : function() {
-        return [this.PosX,this.PosY,(this.radiationImage.width * this.radiation * 3 / 2)];
+		return [this.PosX,this.PosY,(this.radiationImage.width * this.radiation * 3 / 2)];
     },
 	
 	render : function(Delta) {
-        var x = this.PosX;
-        var y = this.PosY;
-        DisplayCTX.save();
-        DisplayCTX.translate(x,y);
-        DisplayCTX.scale(this.radiation * 3 + this.radiationPulse, this.radiation * 3 + this.radiationPulse);
-        DisplayCTX.drawImage(this.radiationImage,-(this.radiationImage.width/2),(-(this.radiationImage.height/2))-BackgX);
-        DisplayCTX.restore();
-        
-        
+		var x = this.PosX;
+		var y = this.PosY;
+		ctx.save();
+		ctx.translate(x,y);
+		ctx.scale(this.radiation * 3 + this.radiationPulse, this.radiation * 3 + this.radiationPulse);
+		ctx.drawImage(this.radiationImage,-(this.radiationImage.width/2),(-(this.radiationImage.height/2))-BackgX);
+		ctx.restore();
 	},
     
-    ignoreCollision : function() {
-        return true;
-    }
-	
-	
+	ignoreCollision : function() {
+		return true;
+	}	
 });

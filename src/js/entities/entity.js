@@ -64,7 +64,7 @@ var Entity = Class.extend({
 								 this.width, 								// Width in image to display
 								 this.height,								// Height in image to display
 								 this.PosX-this.world.game.camera.CameraX, 	// Position X
-								 this.PosY-this.height,						// Position Y
+								 this.PosY,									// Position Y
 								 this.width,								// Width to display
 								 this.height);								// Height to display
 		} else {
@@ -77,7 +77,7 @@ var Entity = Class.extend({
 								 this.width, 
 								 this.height, 
 								 -(this.PosX-this.world.game.camera.CameraX), 
-								 this.PosY-this.height, 
+								 this.PosY, 
 								 this.width, 
 								 this.height);
 			ctx.restore();
@@ -109,38 +109,40 @@ var Entity = Class.extend({
 		
 		newY = this.velocityY + this.PosY;
 		newX = this.velocityX + this.PosX;
+		
+		if (newY > (this.world.FLOOR_LEVEL - this.height)) {
+            newY = this.world.FLOOR_LEVEL - this.height;
+        }
 
 		//Collision check
 		var collidedHorizontally = false;
         var collidedVertically = false;
         var onFloor = false;
 		
-		if(!this.world.isCollision(this, newX, this.PosY, this.width, this.height, false)) {
+		if(!this.world.isCollision(this, this.getCollisionHitbox([newX, this.PosY, this.width, this.height]), false)) {
 			this.PosX = newX;
 		} else {
 			this.velocityX = 0;
 			collidedHorizontally = true;
 		}
 		if(this.velocityY < 0) {
-			if(!this.world.isCollision(this, this.PosX, newY, this.width, this.height, false)) {
+			if(!this.world.isCollision(this, this.getCollisionHitbox([this.PosX, newY, this.width, this.height]), false)) {
 				this.PosY = newY;
 			} else {
 				collidedVertically = true;
 			}
 		} else {
-			if(!this.world.isCollision(this, this.PosX, newY, this.width, Math.max(this.velocityY, 0.75), true)) {
+			if(!this.world.isCollision(this, this.getCollisionHitbox([this.PosX, this.PosY+this.height, this.width, Math.max(this.velocityY, this.gravity)]), true)) {
 				this.PosY = newY;
-				if(this.world.isCollision(this, this.PosX, newY+1, this.width, this.velocityY+10, true)) {
-					onFloor = true;
-				}
 			} else {
 				collidedVertically = true;
 				this.velocityY = 0;
+				onFloor = true;
 			}
 		}
 		
 		this.wasjumping = this.jumping;
-		this.jumping = !this.flying && this.PosY < 672 && !onFloor;
+		this.jumping = !this.flying && this.PosY < this.world.FLOOR_LEVEL - this.height && !onFloor;
 		this.wasMoving = this.isMoving;
 		this.isMoving = Math.abs(this.velocityX) > 0;
 		
@@ -275,7 +277,7 @@ var Entity = Class.extend({
 	},
 	
 	getPosition : function() {
-		return new Array(this.PosX,this.PosY,this.width,this.height);
+		return [this.PosX,this.PosY,this.width,this.height];
 	},
 	
 	ignoreCollision : function() {
@@ -287,7 +289,5 @@ var Entity = Class.extend({
 	},
 	
 	onObstacleCollision : function(obstacle) {
-    },
-	
-	ignoreCollision : false
+    }
 });

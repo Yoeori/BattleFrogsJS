@@ -14,8 +14,8 @@ Or: http://yoeori.nl/battleFrogs/ (Arguments: width)
 ### Todo
 
 Add Enemys<br />
-Refactor PlayerBullit to Class sys<br />
-Add projectiles<br />
+<del>Refactor PlayerBullit to Class sys</del><br />
+<del>Add projectiles</del><br />
 Add AI<br />
 <del>Refactor Battlefrogs.js, RenderBackground.js and collisions.js to World.js</del><br />
 <del>Add camera</del><br />
