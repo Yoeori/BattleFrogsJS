@@ -335,7 +335,7 @@ document.documentElement.onkeydown = function(e) {
 	} else if(e) {
 		keycode = e.which;
 	}
-	if(imagesloaded == "done" && soundloaded == true)
+	if(imagesloaded == "done" && soundloaded == true && game instanceof BattleToads)
     	game.keyPressed(keycode);
 }
 
@@ -346,6 +346,6 @@ document.documentElement.onkeyup = function(e) {
 	} else if(e){
 		keycode = e.which;
 	}
-	if(imagesloaded == "done" && soundloaded == true)
+	if(imagesloaded == "done" && soundloaded == true && game instanceof BattleToads)
 		game.keyboard.onKeyUp(keycode);
 }

@@ -112,8 +112,8 @@ function ReadTick() {
 	document.getElementById("Tick").innerHTML = Tick+"%";
 	Tick = 0;
 }
-window.onfocus = function() { game.paused = false; };
-window.onblur = function() { game.paused = true; };
+window.onfocus = function() { if(game instanceof BattleToads) game.paused = false; };
+window.onblur = function() { if(game instanceof BattleToads) game.paused = true; };
 /*
 		  ctx.beginPath();
 		  ctx.arc(5000-this.camera.CameraX, 200, 120, 0, 2 * Math.PI, false);

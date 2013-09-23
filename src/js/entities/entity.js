@@ -6,6 +6,7 @@ var Entity = Class.extend({
 	PosY: 0,
 	startX: 0,
 	startY: 0,
+	startingPoint: [],
 	
 	wasjumping: false,
 	jumping: false,
@@ -48,6 +49,7 @@ var Entity = Class.extend({
 		this.startY = startingPoint[1];
 		this.PosX = startingPoint[0];
 		this.PosY = startingPoint[1];
+		this.startingPoint = startingPoint;
 		this.width = width;
 		this.height = height;
 	},

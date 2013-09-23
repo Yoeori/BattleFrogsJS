@@ -32,9 +32,10 @@ var EntityProjectile = Entity.extend({
 		
 		var collisionEntities = this.world.getCollidingEntities(this);
 		for (var i = 0; i < collisionEntities.length; i++) {
+			var entity = collisionEntities[i];
 			if (entity.team != this.team) {
 				this.dealDamage(entity);
-				if (entity instanceof Enemy) {
+				if (entity instanceof EntityHumanoidEnemy) {
 					sound.play("Frog_Exploding");
 				}
 				this.die();
