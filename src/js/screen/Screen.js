@@ -54,7 +54,7 @@ var ScreenLockedDoor = ScreenText.extend({
 
 var ScreenWin = Screen.extend({
 	
-	TIME_TO_SHOW : 5000,
+	TIME_TO_SHOW : 60000,
 	text : "",
 	
 	onStart : function() {

@@ -94,6 +94,10 @@ function init() {
 function Ticker() {
 	ReadFPS();
 	GameFPStick = setInterval(function() {
+		if(window.innerHeight <= 765)
+			document.getElementById("footer").style.color = "#FFF";
+		else
+			document.getElementById("footer").style.color = "#000";
 		if(!game.paused)
 			ReadFPS();
 	},1000);
