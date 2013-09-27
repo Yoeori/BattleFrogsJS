@@ -148,6 +148,12 @@ var BattleToads = Class.extend({
 			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449]));
 			this.world.addEntity(new EntityPickupWeapon(this.world, [14000, 430]));
 			
+			//this.world.addFrogPirate([9800, 652]);
+			//this.world.addFrogPirate([11031, 630]);
+			//this.world.addFrogPirate([12022, 648]);
+			
+			
+			
 			this.world.addForegroundObject(new ForegroundObject(sml["LeaveCryo_Door_Broken"], [8040, 0], 211, 720));
 			this.world.addForegroundObject(intactBakeryDoorForeground);
 			

@@ -32,7 +32,10 @@ loadimages = new Array(	new Array("bg","bg"),
 					    "win",
 					    "gameover",
 					    "explosion_tadpole",
-					    "explosion_splatter"
+					    "explosion_splatter",
+					   
+					   	// Enemys
+					    "frog_normal"
 					   );
 var sml = new Array();
 imagesloaded = 0;

@@ -197,5 +197,23 @@ var World = Class.extend({
 			}
 		}
 		return result;
+	},
+	
+	addFrogPirate : function(startingPoint) {
+		var frogPirate = new EntityHumanoidEnemyFrogPirate(this, startingPoint, startingPoint, Team.THE_FRENCH);
+		this.addEntity(frogPirate);
+	},
+	
+	addFrogPirateG : function(startingPoint, guardingPoint) {
+		var frogPirate = new EntityHumanoidEnemyFrogPirate(this, startingPoint, guardingPoint, Team.THE_FRENCH);
+		this.addEntity(frogPirate);
+	},
+	
+	getNumberOfBosses : function() {
+		return this.numberOfBosses;
+	},
+	
+	setNumberOfBosses : function(numberOfBosses) {
+		this.numberOfBosses = numberOfBosses;
 	}
 });

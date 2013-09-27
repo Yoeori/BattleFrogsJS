@@ -15,6 +15,7 @@ var OpposingEntityInVicinityAction = Action.extend({
 	isEnemyInRange : function(entity) {
 		var opposingEntity = this.getNearestEnemy(entity);
 		if (opposingEntity == 0) return false;
+		
 		var intersecting = entity.isIntersecting(opposingEntity);
 		var deltaY = entity.deltaY(opposingEntity);
 		var inRange = entity.deltaX(opposingEntity) <= this.range;
@@ -23,6 +24,6 @@ var OpposingEntityInVicinityAction = Action.extend({
 	},
 	
 	getNearestEnemy : function(entity) {
-		return this.world.getNearestEntity([entity.PosX+entity.width/2),(entity.PosY-entity.height/2)]);
+		return entity.world.getNearestEntity([entity.PosX+entity.width/2),(entity.PosY-entity.height/2)]);
 	}
 });
