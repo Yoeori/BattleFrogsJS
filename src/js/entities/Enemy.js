@@ -13,7 +13,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 	update : function(delta) {
 		this.wasAttacking = this.isAttacking;
 		var cycledAttack = false;
-		var attackDelta = date.now - this.attackStart;
+		var attackDelta = Date.now() - this.attackStart;
 		this.isReadyForAttack = false;
 		
 		if(this.isAttacking && attackDelta >= this.getAttackTime()) {
@@ -22,7 +22,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 		}
 		
 		if(!this.wasjumping && !this.jumping && !this.isAttacking && this.canAttack()) {
-			this.attackStart = date.now;
+			this.attackStart = Date.now();
 			this.isAttacking = true;
 			this.hasAttackHappened = false;
 			attackDelta = 0;

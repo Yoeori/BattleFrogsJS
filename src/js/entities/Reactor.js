@@ -58,7 +58,7 @@ var EntityReactor = Entity.extend({
 		this.radiation -= 0.35;
 		if (this.radiation <= 0) {
 			this.radiation = 0;
-			worldState.set(worldState.RADIATION_CLEARED);
+			this.world.setState(State.RADIATION_CLEARED);
 		}
 	},
     

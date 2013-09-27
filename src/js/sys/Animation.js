@@ -107,7 +107,10 @@ var Animation = Class.extend({
 	},
 	
 	getCurrentFrame : function() {
-		return new Array(this.frames[this.currentFrame].y,this.frames[this.currentFrame].x);
+		if(this.currentFrame >= 0)
+			return [this.frames[this.currentFrame].y,this.frames[this.currentFrame].x];
+		else
+			return [0, 0];
 		
 	},
 	
