@@ -56,7 +56,7 @@ var World = Class.extend({
 		
 		camera.getX();
 		ctx.drawImage(sml["starbackground"], 0, 0);
-		ctx.drawImage(sml["bg"], camera.getX(), 0, canvas.width, 720, 0, 0, canvas.width, 720);
+		ctx.drawImage(sml["bg"], camera.CameraX, 0, canvas.width, 720, 0, 0, canvas.width, 720);
 		
 		if (this.easterEgg != 0) {
 			this.easterEgg.render(camera);

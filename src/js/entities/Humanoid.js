@@ -12,7 +12,7 @@ var EntityHumanoid = Entity.extend({
 	
 	applyCurrentBehavior : function() {
 		for(var i = 0; i < this.behaviors.length; i++) {
-			var action = this.behaviors[i].getAction();
+			var action = this.behaviors[i].action;
 			if(action.isConditionMet(this)) {
 				action.performAction(this);
 				break;

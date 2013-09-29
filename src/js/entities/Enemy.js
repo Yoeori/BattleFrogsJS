@@ -54,7 +54,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 	
 	canAttack : function() {
 		for(var i = 0; i < this.behaviors.length; i++) {
-			var action = this.behaviors[i].getAction();
+			var action = this.behaviors[i].action;
 			if(action instanceof Attack && action.shouldAnimateAttack() && action.isConditionMet(this))
 				return true;
 		}

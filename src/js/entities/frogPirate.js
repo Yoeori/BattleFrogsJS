@@ -21,16 +21,15 @@ var EntityHumanoidEnemyFrogPirate = EntityHumanoidEnemy.extend({
 		this._super(world, sml["frog_normal"], point, 388, 191);
 		
 		for (var i = 0; i < this.ANIMATION_COUNT; i++) {
-            var anim = new Animation(0, this.ANIMATION_FRAME_COUNT[this.type] - 1, i,  this.ANIMATION_FRAME_RATE[i]);
+            var anim = new Animation(0, this.ANIMATION_FRAME_COUNT[i] - 1, i,  this.ANIMATION_FRAME_RATE[i]);
             this.animations[i] = anim;
         }
-		//addBehavior(new Behavior(1, new MeleeAttack(opposingTeam, MELEE_DAMAGE)));
-		//addBehavior(new Behavior(2, new TongueAttack(opposingTeam)));
-		//addBehavior(new Behavior(5, new StalkEntity(opposingTeam, STALKING_SPEED)));
+		this.addBehavior(new Behavior(1, new MeleeAttack(opposingTeam, this.MELEE_DAMAGE)));
+		//this.addBehavior(new Behavior(2, new TongueAttack(opposingTeam)));
+		this.addBehavior(new Behavior(5, new StalkEntity(opposingTeam, this.STALKING_SPEED)));
 		this.guardPoint = guardPoint;
-		//addBehavior(new Behavior(25, new ReturnToGuardPoint(this.guardPoint, 12)));
-		//addBehavior(new Behavior(50, new Patrol(4, 400)));
-		this.animType = this.ANIMATION_TYPE_IDLE;
+		this.addBehavior(new Behavior(25, new ReturnToGuardPoint(this.guardPoint, 12)));
+		this.addBehavior(new Behavior(50, new Patrol(4, 400)));
 		
 	},
 	
@@ -88,7 +87,6 @@ var EntityHumanoidEnemyFrogPirate = EntityHumanoidEnemy.extend({
 	
 	getFrame : function() {
 		return this.animations[this.animType].getCurrentFrame();
-		//return [0, 0];
 	},
 	
 	onLanding : function() {

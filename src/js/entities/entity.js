@@ -179,7 +179,7 @@ var Entity = Class.extend({
         return this.width > otherEntity.PosX && this.PosX < (otherEntity.width+otherEntity.PosX) && this.height > (otherEntity.PosY-otherEntity.height) && this.PosY < otherEntity.PosY;
     },
 	
-	DeltaX : function(otherEntity) {
+	deltaX : function(otherEntity) {
 		
 		var rightAfterLeft = (this.PosX+this.width) >= otherEntity.PosX;
         var rightBeforeRight = (this.PosX+this.width) <= (otherEntity.PosX+otherEntity.width);
@@ -201,29 +201,42 @@ var Entity = Class.extend({
         return Math.abs(this.PosX - (otherEntity.PosX+otherEntity.width));
 	},
 	
-	DeltaYEnt : function(DeltaYEntentity) {
+	deltaXPoint : function(point) {
+		if(contains([this.PosX, this.PosY, this.width, this.height], point)) {
+			return 0;
+		}
+		
+		if((this.PosX + this.width) < point[0]) {
+			return Math.abs(point[0] - (this.PosX+this.width));
+		}
+		
+		return Math.abs(this.PosX - point[0]);
+	},
+	
+	deltaYEnt : function(DeltaYEntentity) {
 		this.DeltaY(DeltaYEntentity.getPosition());
 	},
 	
-	DeltaY : function(DeltaYRect) {
-		var topBelowTop = (this.PosY-this.height) >= (DeltaYRect[1]-DeltaYRect[3]);
-        var topAboveBottom = (this.PosY-this.height) <= DeltaYRect[1];
+	deltaY : function(DeltaYRect) {
+		var topBelowTop = this.PosY >= DeltaYRect[1];
+        var topAboveBottom = this.PosY <= (DeltaYRect[1]+DeltaYRect[3]);
         var topIntersects = topBelowTop && topAboveBottom;
 		
-		var bottomBelowTop = this.PosY >= (DeltaYRect[1]-DeltaYRect[3]);
-        var bottomAboveBottom = this.PosY <= DeltaYRect[1];
+		var bottomBelowTop = (this.PosY+this.height) >= DeltaYRect[1];
+        var bottomAboveBottom = (this.PosY+this.height) <= (DeltaYRect[1]+DeltaYRect[3]);
         var bottomIntersects = bottomBelowTop && bottomAboveBottom;
 		
 		var contained = topBelowTop && bottomAboveBottom;
+		
 		if (topIntersects || bottomIntersects || contained) {
             return 0;
         }
 		
-		if ((this.PosY-this.height) < DeltaYRect[1]) {
-            return Math.abs(DeltaYRect[1] - (this.PosY-this.height));
+		if (this.PosY < (DeltaYRect[1]+DeltaYRect[3])) {
+            return Math.abs((DeltaYRect[1]+DeltaYRect[3]) - this.PosY);
         }
 
-        return Math.abs(this.PosY - (DeltaYRect[1]-DeltaYRect[3]));
+        return Math.abs((this.PosY+this.height) - DeltaYRect[1]);
 		
 	},
 	

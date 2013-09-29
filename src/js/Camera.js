@@ -18,9 +18,9 @@ Camera = Class.extend({
 		if (x > (bounds[0] - this.game.GAME_WIDTH))
 			x = (bounds[0] - this.game.GAME_WIDTH);
 		
-		if(this.game.player.isLeftShooting) {
+		if(this.game.player.isLeftShooting && x != 0) {
 			x += 48/2;
-		} else if(this.game.player.isAttacking) {
+		} else if(this.game.player.isAttacking && x != 0) {
 			x -= 48/2;
 		}
 		

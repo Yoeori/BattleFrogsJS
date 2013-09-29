@@ -22,7 +22,7 @@ var Animation = Class.extend({
 	pingPong: false,
 	loop: true,
 	
-	init : function(x0,x1,yt,duration) {
+	init : function(x0, x1, yt, duration) {
 		this.frames = new Array();
 		for(var x = x0; x <= x1; x++) {
 			this.addFrame(duration,x,yt);
@@ -107,11 +107,7 @@ var Animation = Class.extend({
 	},
 	
 	getCurrentFrame : function() {
-		if(this.currentFrame >= 0)
-			return [this.frames[this.currentFrame].y,this.frames[this.currentFrame].x];
-		else
-			return [0, 0];
-		
+		return [this.frames[this.currentFrame].y,this.frames[this.currentFrame].x];
 	},
 	
 	addFrame : function(duration,x,y) {

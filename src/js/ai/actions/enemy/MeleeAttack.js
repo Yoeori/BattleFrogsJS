@@ -1,4 +1,4 @@
-var MaleeAttack = Attack.extend({
+var MeleeAttack = Attack.extend({
 	
 	COOLDOWN_MS : 100,
 	RANGE : 0,

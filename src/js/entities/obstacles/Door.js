@@ -11,11 +11,8 @@ EntityObstacleDoor = EntityObstacle.extend({
 	update : function() {
 		var player = this.world.getNearestEntity([this.PosX+(this.width/2),this.PosY-(this.height/2)], Team.THE_FRENCH);
 
-		var deltaX = player.DeltaX(this);
-		var deltaY = player.DeltaX(this.getCollisionHitbox());
-		
-		//console.log(deltaX+" : "+deltaY);
-		//console.log(this.getCollisionHitbox());
+		var deltaX = player.deltaX(this);
+		var deltaY = player.deltaY(this.getCollisionHitbox());
 		
 		if (deltaX <= this.MESSAGE_RANGE && deltaY == 0) {
             this.world.game.setScreen(new ScreenLockedDoor(this.world.game));

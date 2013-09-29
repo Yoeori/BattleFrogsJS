@@ -10,9 +10,11 @@ var Patrol = Attack.extend({
 	
 	performAction : function(entity) {
 		if(Math.abs(entity.horizontalSpeed) != this.patrolSpeed) {
-			this.resumePatrol();
+			this.resumePatrol(entity);
 		} else {
-			//TODO
+			if(this.hasReachedRightEnd(entity) && this.hasReachedLeftEnd(entity)) {
+				entity.invertHorizontalSpeed();
+			}
 		}
 	},
 	
@@ -24,11 +26,21 @@ var Patrol = Attack.extend({
 	},
 	
 	hasReachedLeftEnd : function(entity) {
-		//TODO
+		if(entity.facing == entity.FACING_LEFT) {
+			var leftPatrolEndPoint = entity.startX - this.patrolLength;
+			var hasVenturedOutsidePatrolArea = entity.PosX + (entity.width/2) < this.leftPatrolEndPoint;
+			return entity.isMovingLeft() && (!entity.canContinueMoving() || hasVenturedOutsidePatrolArea);
+		}
+		return false;
 	},
 	
 	hasReachedRightEnd : function(entity) {
-		//TODO
+		if(entity.facing == entity.FACING_RIGHT) {
+			var rightPatrolEndPoint = entity.startX + this.patrolLength;
+			var hasVenturedOutsidePatrolArea = entity.PosX + (entity.width/2) > this.rightPatrolEndPoint;
+			return entity.isMovingRight() && (!entity.canContinueMoving() || hasVenturedOutsidePatrolArea);
+		}
+		return false;
 	},
 	
 	isConditionMet : function(entity) {

@@ -64,6 +64,22 @@ function intersects(shape1, shape2) {
 		return false;
 	}
 }
+function contains(Pos1, Pos2) {
+		if (Pos2[0] <= Pos1[0]) {
+			return false;
+		}
+		if (Pos2[1] <= Pos1[1]) {
+			return false;
+		}
+		if (Pos2[0] >= Pos1[0]+Pos1[2]) {
+			return false;
+		}
+		if (Pos2[1] >= Pos1[1]+Pos1[3]) {
+			return false;
+		}
+		
+		return true;
+}
 function distanceSquared(fromXY, toXY) {
 	var a = fromXY[0] - toXY[0];
     var b = fromXY[1] - toXY[1];
