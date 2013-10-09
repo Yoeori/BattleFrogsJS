@@ -46,7 +46,7 @@ var World = Class.extend({
 			if(r > 0.5) {
 				this.easterEgg = new SpaceKitten(this);
 			} else {
-				this.easterEgg = new SpacePizza(this);
+				this.easterEgg = new SpaceKitten(this);
 			}
 			this.setNextEasterEggSpawn(Date.now());
 		}		
@@ -68,11 +68,12 @@ var World = Class.extend({
 		
 		camera.getX();
 		ctx.drawImage(sml["starbackground"], 0, 0);
-		ctx.drawImage(sml["bg"], camera.CameraX, 0, canvas.width, 720, 0, 0, canvas.width, 720);
 		
 		if (this.easterEgg != 0) {
 			this.easterEgg.render(camera);
 		}
+		
+		ctx.drawImage(sml["bg"], camera.CameraX, 0, canvas.width, 720, 0, 0, canvas.width, 720);
 		
 		for(var i= 0; i < this.entities.length; i++) {
 			if(this.entities[i] != null) {
