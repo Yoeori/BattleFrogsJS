@@ -4,14 +4,14 @@ var EntityProjectile = Entity.extend({
 	damage : 25,
 	attack : 0,
 	
+	instance : "EntityProjectile",
+	
 	init: function(world, image, origin, width, height, RANGE, DAMAGE) {
 		this._super(world, image, [origin.PosX+(origin.width/2),origin.PosY+(origin.height/2)], width, height, origin.team);
 		this.damageModifier = origin.damageModifier;
 		this.startingPoint = this.getProjectilePoint(origin);
 		this.PosX = this.startingPoint[0];
 		this.PosY = this.startingPoint[1];
-		this.startX = this.startingPoint[0];
-		this.startY = this.startingPoint[1];
 		this.range = RANGE;
 		this.damage = DAMAGE;
 		this.width = width;
@@ -43,9 +43,9 @@ var EntityProjectile = Entity.extend({
 			}
 		}
 		
-		if(this.facing == this.FACING_RIGHT && this.PosX >= (this.startX+this.range))
+		if(this.facing == this.FACING_RIGHT && this.PosX >= (this.startingPoint[0]+this.range))
 			this.die();
-		else if(this.facing == this.FACING_LEFT && (this.PosX + this.width) <= (this.startX-this.range))
+		else if(this.facing == this.FACING_LEFT && (this.PosX + this.width) <= (this.startingPoint[0]-this.range))
 			this.die();
 	},
 	

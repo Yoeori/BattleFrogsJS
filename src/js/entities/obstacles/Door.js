@@ -1,7 +1,8 @@
-EntityObstacleDoor = EntityObstacle.extend({
+var EntityObstacleDoor = EntityObstacle.extend({
 	
 	MESSAGE_RANGE: 100,
 	
+	instance : "EntityObstacleDoor",
 	
 	init : function(world, image, startingPoint, width, height, collisionBox) {
 		this._super(world, image, startingPoint, width, height, Team.THE_FROG_PIRATES, collisionBox);

@@ -1,5 +1,7 @@
 var EntityPickupWeapon = EntityPickup.extend({
 	
+	instance : "EntityPickupWeapon",
+	
 	init : function(world, startingPoint) {
 		this._super(world, sml["weapon"], startingPoint, 80, 36, Team.THE_FRENCH);
 	},

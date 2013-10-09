@@ -25,6 +25,7 @@ var EntityPlayer = Entity.extend({
 	wasAttacking : false,
 	hasAttackHappened : false,
 	
+	instance : "EntityPlayer",
 	
 	init: function(world, image, width, height) {
 		this._super(world, image, [this.STARTING_X, world.FLOOR_LEVEL-height], width, height, Team.THE_FRENCH);

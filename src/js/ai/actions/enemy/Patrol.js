@@ -27,7 +27,7 @@ var Patrol = Attack.extend({
 	
 	hasReachedLeftEnd : function(entity) {
 		if(entity.facing == entity.FACING_LEFT) {
-			var leftPatrolEndPoint = entity.startX - this.patrolLength;
+			var leftPatrolEndPoint = entity.startingPoint[0] - this.patrolLength;
 			var hasVenturedOutsidePatrolArea = entity.PosX + (entity.width/2) < this.leftPatrolEndPoint;
 			return entity.isMovingLeft() && (!entity.canContinueMoving() || hasVenturedOutsidePatrolArea);
 		}
@@ -36,7 +36,7 @@ var Patrol = Attack.extend({
 	
 	hasReachedRightEnd : function(entity) {
 		if(entity.facing == entity.FACING_RIGHT) {
-			var rightPatrolEndPoint = entity.startX + this.patrolLength;
+			var rightPatrolEndPoint = entity.startingPoint[0] + this.patrolLength;
 			var hasVenturedOutsidePatrolArea = entity.PosX + (entity.width/2) > this.rightPatrolEndPoint;
 			return entity.isMovingRight() && (!entity.canContinueMoving() || hasVenturedOutsidePatrolArea);
 		}

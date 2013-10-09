@@ -6,12 +6,14 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 	wasAttacking : false,
 	attackStart : 0,
 	
+	instance : "EntityHumanoidEnemy",
+	
 	init : function(world, image, point, width, height) {
 		this._super(world, image, point, width, height, Team.THE_FROG_PIRATES);
 	},
 	
 	update : function(delta) {
-		this.wasAttacking = this.isAttacking;
+		/*this.wasAttacking = this.isAttacking;
 		var cycledAttack = false;
 		var attackDelta = Date.now() - this.attackStart;
 		this.isReadyForAttack = false;
@@ -37,7 +39,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 			this.stopAttackAnimation();
 		} else if(cycledAttack && this.isAttacking) {
 			this.cycleAttackAnimation();
-		}
+		}*/
 		
 		this._super(delta);
 	},

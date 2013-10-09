@@ -1,0 +1,23 @@
+﻿# Saving
+
+In the actual game there is no way to save, but the main purpose of this port is exercise in coding,
+
+and what is better then finding a way to save the game? Making my own game? NOOOO....
+
+---
+
+### Structure
+
+Every entity/screen will have a save and saveRestore function, this will return an array which when ready is put in a big array.
+
+This array will have the following structure:<br />
+
+Main -> 	entitys ->	1 ->	Position: [0,500]
+					velocityY: -3000
+				2 ->	guardPoint: [200, -2]
+					behaviors ->	1 ->	returningSpeed: 2
+							2 ->	patrolLength: 200
+				3 ->	
+		screen  ->	text: "Lol, text"
+				image: new Image("Yayilist.png")
+				spawntime: ∞

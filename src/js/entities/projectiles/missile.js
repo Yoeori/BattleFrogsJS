@@ -1,7 +1,9 @@
 var EntityProjectileMissile = EntityProjectile.extend({
-
+	
 	RenderDiff : true,
 	SPEED : 20,
+	
+	instance : "EntityProjectileMissile",
 	
 	init : function(world, origin) {
 		this._super(world, sml["missile"], origin, 60, 29, 500, 25);

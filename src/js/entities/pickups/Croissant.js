@@ -1,5 +1,7 @@
 var EntityPickupCroissant = EntityPickup.extend({
 	
+	instance : "EntityPickupCroissant",
+	
 	init : function(world, startingPoint) {
 		this._super(world, sml["croissant"], startingPoint, 52, 48, Team.THE_FRENCH);
 	},

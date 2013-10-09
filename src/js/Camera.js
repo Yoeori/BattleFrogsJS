@@ -26,7 +26,5 @@ Camera = Class.extend({
 		
 		this.CameraX = x;
 		return x;
-		
-		
 	}
 });

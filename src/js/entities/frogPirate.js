@@ -17,6 +17,8 @@ var EntityHumanoidEnemyFrogPirate = EntityHumanoidEnemy.extend({
 	
 	RenderDiff : true,
 	
+	instance : "EntityHumanoidEnemyFrogPirate",
+	
 	init : function(world, point, guardPoint, opposingTeam) {
 		this._super(world, sml["frog_normal"], point, 388, 191);
 		

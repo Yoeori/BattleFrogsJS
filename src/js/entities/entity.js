@@ -4,8 +4,6 @@ var Entity = Class.extend({
 	velocityX: 0,
 	PosX: 0,
 	PosY: 0,
-	startX: 0,
-	startY: 0,
 	startingPoint: [],
 	
 	wasjumping: false,
@@ -22,7 +20,6 @@ var Entity = Class.extend({
 	jumpSpeed: 22.5,
 	gravity: 0.75,
 	animationSheet: new Image(),
-	frame: 0,
 	team: 0,
 	height : 0,
 	width : 0,
@@ -40,13 +37,13 @@ var Entity = Class.extend({
 	inversegravity : false,
 	RenderDiff : false,
 	
+	instance : "Entity",
+	
 	init : function(world, image, startingPoint, width, height, team) {
 		this.animationSheet = image;
 		this.team = team;
 		this.world = world;
 		this.lifestart = new Date().getTime();
-		this.startX = startingPoint[0];
-		this.startY = startingPoint[1];
 		this.PosX = startingPoint[0];
 		this.PosY = startingPoint[1];
 		this.startingPoint = startingPoint;
@@ -304,5 +301,20 @@ var Entity = Class.extend({
 	},
 	
 	onObstacleCollision : function(obstacle) {
-    }
+    },
+	
+	save : function(ReturnSave) {
+		ReturnSave["velocityY"] = this.velocityY;
+		ReturnSave["velocityX"] = this.velocityX;
+		ReturnSave["PosX"] = this.PosX;
+		ReturnSave["PosY"] = this.PosY;
+		ReturnSave["startingPoint"] = this.startingPoint;
+		ReturnSave["jumping"] = this.jumping;
+		ReturnSave["frame"] = this.frame;
+		ReturnSave["lifestart"] = this.lifestart;
+		ReturnSave["horizontalSpeed"] = this.horizontalSpeed;
+		ReturnSave["facing"] = this.facing;
+		
+		return ReturnSave;
+	}
 });

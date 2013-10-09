@@ -1,5 +1,7 @@
 var EntityPickup = Entity.extend({
 	
+	instance : "EntityPickup",
+	
 	update : function(Delta) {
 		this.move();
 		

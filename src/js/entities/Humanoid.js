@@ -2,6 +2,8 @@ var EntityHumanoid = Entity.extend({
 	
 	behaviors : [],
 	
+	instance : "EntityHumanoid",
+	
 	init : function(world, image, startingPoint, width, height, team) {
 		this._super(world, image, startingPoint, width, height, team);
 	},

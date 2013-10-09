@@ -2,6 +2,8 @@ EntityObstacle = Entity.extend({
 	
 	collisionBox : [],
 	
+	instance : "EntityObstacle",
+	
 	init : function(world, image, startingPoint, width, height, team, pcollisionBox) {
 		this._super(world, image, startingPoint, width, height, team);
 		this.collisionBox = [];
