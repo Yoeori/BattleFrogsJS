@@ -32,21 +32,33 @@ var World = Class.extend({
 		this.foregroundObjects = [];
 		this.numberOfBosses = 0;
 		this.easterEgg = 0;
-		this.setNextEasterEggSpawn();
+		this.setNextEasterEggSpawn(Date.now());
 	},
 	
 	update : function(deltaTime) {
 		for(var i = 0; i < this.entities.length; i++) {
 			this.entities[i].update(deltaTime);
 		}
+		
+		var now = Date.now();
+		if((now - this.maxEasterEggInterval) > this.lastEasterEggSpawn) {
+			var r = Math.random();
+			if(r > 0.5) {
+				this.easterEgg = new SpaceKitten(this);
+			} else {
+				this.easterEgg = new SpacePizza(this);
+			}
+			this.setNextEasterEggSpawn(Date.now());
+		}		
 	
 		if (this.easterEgg != 0) {
 			this.easterEgg.update(deltaTime);
 		}
 	},
 	
-	setNextEasterEggSpawn : function() {
-		
+	setNextEasterEggSpawn : function(now) {
+		var variance = (NextGaussian() * this.SPAWN_RATE_VARIANCE * 2) - this.SPAWN_RATE_VARIANCE;
+		this.lastEasterEggSpawn = now + variance;
 	},
 	
 	render : function(camera) {
@@ -215,5 +227,9 @@ var World = Class.extend({
 	
 	setNumberOfBosses : function(numberOfBosses) {
 		this.numberOfBosses = numberOfBosses;
-	}
+	},
+	
+	removeEasterEgg : function() {
+        this.easterEgg = 0;
+    }
 });
