@@ -35,7 +35,10 @@ loadimages = new Array(	new Array("bg","bg"),
 					    "explosion_splatter",
 					   
 					   	// Enemys
-					    "frog_normal"
+					    "frog_normal",
+						
+						//Easter egg
+						"splodinkittensheet"
 					   );
 var sml = new Array();
 imagesloaded = 0;
