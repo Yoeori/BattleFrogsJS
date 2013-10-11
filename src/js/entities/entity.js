@@ -314,7 +314,6 @@ var Entity = Class.extend({
 		ReturnSave["lifestart"] = this.lifestart;
 		ReturnSave["horizontalSpeed"] = this.horizontalSpeed;
 		ReturnSave["facing"] = this.facing;
-		
 		return ReturnSave;
 	}
 });

@@ -66,7 +66,7 @@ var BattleToads = Class.extend({
 			sound.BgMusic[i].update();
 		}
 		
-		if(this.screen != 0) 
+		if(this.screen != 0 && this.paused != true) 
 			this.screen.update(deltaTime);
 	},
 	
