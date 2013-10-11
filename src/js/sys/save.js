@@ -28,34 +28,40 @@ var Save = Class.extend({
 	
 	save : function(SaveObject) {
 		
-		//newSave["entities"] = [];
+		var newSave = {};
 		
 		//Get entity save
+		newSave["entities"] = {}
 		for(var i = 0; i < SaveObject.world.entities.length; i++) {
 			var ent = SaveObject.world.entities[i];
-			var addSave = [ent.instance, ent.save([])];
-			//newSave["entities"].push(addSave);
+			var addSave = {"object" : ent.instance, "entity" : ent.save({})};
+			newSave["entities"][i] = addSave;
 		}
 		
 		//Foreground
 
 		//Get screen save
-		//var screen = SaveObject.screen;
-		//var addSave = [screen.instance, screen.save([])];
-		//newSave["screen"] = addSave;
-		
+		if(SaveObject.screen != 0) {
+			var screen = SaveObject.screen;
+			var addSave = {"object": screen.instance, "screen": screen.save({})};
+			newSave["screen"] = addSave;
+		}
 		//Get battleToads game save
-		var NewSaveGame = [SaveObject.startTime];
+		var NewSaveGame = {"startTime" : SaveObject.startTime};
 		
 		
 		//Easter egg
 		
 		//Get world save
 		var world = SaveObject.world;
-		var NewSaveworld = [world.obstacles, world.lastEasterEggSpawn, world.numberOfBosses, world.state];
-		var newSave = {game: NewSaveGame, world: NewSaveworld};
-		console.log((newSave));
-		//localStorage.setItem("BattleFrogs_Game", JSON.stringify(newSave));
+		var NewSaveWorld = {"collisions" : world.collisions,
+							"lastEasterEggSpawn" : world.lastEasterEggSpawn, 
+							"numberOfBosses" : world.numberOfBosses, 
+							"state" : world.state};
+		newSave["game"] = NewSaveGame;
+		newSave["world"] = NewSaveWorld;
+		//console.log(JSON.stringify(newSave));
+		localStorage.setItem("BattleFrogs_Game", JSON.stringify(newSave));
 	},
 	
 	saveRestore : function() {
