@@ -20,10 +20,6 @@ var EntityObstacleDoor = EntityObstacle.extend({
         }
 	},
 	
-	HotFixCol : function() {
-		return this.getCollisionHitbox();
-	},
-	
 	die : function() {
 		this.onDestroyed();
 		sound.play("Door_Explosion");
@@ -32,4 +28,30 @@ var EntityObstacleDoor = EntityObstacle.extend({
 	
 	onDestroyed : function() {}
 
+});
+var Door_1 = EntityObstacleDoor.extend({
+	
+	instance : "Door_1",
+	
+	onDestroyed : function() {
+		this.world.setState(State.CRYO_DOOR_BLOWN);
+		this.world.addForegroundObject(new ForegroundObject(sml["IntoRift_door_Broken"], [6030, 0], 313, 720));
+	}
+});
+var Door_2 = EntityObstacleDoor.extend({
+	
+	instance : "Door_2",
+	
+	onDestroyed : function() {
+		this.world.removeForegroundObject(game.intactBakeryDoorForeground);
+		this.world.addForegroundObject(new ForegroundObject(sml["BakeryWall_door_Broken"], [11375, 0], 306, 720));
+	}
+});
+var Door_3 = EntityObstacleDoor.extend({
+	
+	instance : "Door_3",
+	
+	onDestroyed : function() {
+		this.world.addForegroundObject(new ForegroundObject(sml["Reactor_door_Broken"], [2135, 0], 502, 720));
+	}
 });

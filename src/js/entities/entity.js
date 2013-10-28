@@ -38,8 +38,15 @@ var Entity = Class.extend({
 	RenderDiff : false,
 	
 	instance : "Entity",
+	initializeKey : [],
 	
 	init : function(world, image, startingPoint, width, height, team) {
+		
+		if(arguments.length == 1) { //Save
+			this.world = world;
+			return;
+		}
+		
 		this.animationSheet = image;
 		this.team = team;
 		this.world = world;
@@ -315,5 +322,11 @@ var Entity = Class.extend({
 		ReturnSave["horizontalSpeed"] = this.horizontalSpeed;
 		ReturnSave["facing"] = this.facing;
 		return ReturnSave;
+	},
+	
+	saveRestore : function(GetSave) {
+		for(i in GetSave) {
+			this[i] = GetSave[i];
+		}
 	}
 });

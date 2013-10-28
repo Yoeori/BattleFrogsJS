@@ -104,9 +104,10 @@ var EntityPlayer = Entity.extend({
 			this.animations[this.animType].stopAt = this.animate[this.animType];
 		}
 		
-		if (Date.now() - this.lastAutoHeal > 10000) {
+		this.lastAutoHeal -= Delta;
+		if (this.lastAutoHeal < 0) {
 			this.increaseHealth(1);
-			this.lastAutoHeal = Date.now();
+			this.lastAutoHeal = 10000;
 		}
 		
 		this.playWalkingSound();

@@ -1,6 +1,5 @@
 var canvas = document.getElementById('GameCanvas');
 var ctx = canvas.getContext('2d');
-var DeltaTime = Date.now();
 function NextGaussian() {
 	return (Math.random()*2-1)+(Math.random()*2-1)+(Math.random()*2-1);
 }
@@ -110,10 +109,15 @@ function init() {
 function Ticker() {
 	ReadFPS();
 	GameFPStick = setInterval(function() {
-		if(window.innerHeight <= 765)
+		if(window.innerHeight <= 765) {
 			document.getElementById("footer").style.color = "#FFF";
-		else
+			document.getElementById("b").style.border = "#FFF 1px solid";
+			document.getElementById("b1").style.border = "#FFF 1px solid";
+		} else {
 			document.getElementById("footer").style.color = "#000";
+			document.getElementById("b").style.border = "#000 1px solid";
+			document.getElementById("b1").style.border = "#000 1px solid";
+		}
 		if(!game.paused)
 			ReadFPS();
 	},1000);
