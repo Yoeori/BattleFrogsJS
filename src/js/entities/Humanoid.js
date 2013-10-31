@@ -33,8 +33,6 @@ var EntityHumanoid = Entity.extend({
 		return this.startingPoint;
 	},
 	
-	isReadyForAttack : function() {
-		return false;
-	}
+	isReadyForAttack : false,
 	
 });

@@ -1,4 +1,5 @@
 var EntityReactor = Entity.extend({
+	
 	CONSOLE_ACTIVATION_TIME: 1000,
 	radiationImage: null,
 	radiation: 1,
@@ -17,12 +18,12 @@ var EntityReactor = Entity.extend({
 		this.radiationPulse = NextGaussian() * Math.sin(life) * 0.05;
 		
 		if(this.radiation > 0) {
-			var colEntitys = world.getCollidingEntitiesShape(this.getRadiationHitbox());
+			var colEntitys = this.world.getCollidingEntitiesShape(this.getRadiationHitbox());
 			var max = this.radiationImage.width * 3 / 2;
 			var ourPos = [this.PosX,this.PosY];
 			for(var i = 0; i < colEntitys.length; i++) {
 				if(colEntitys[i] == this) continue;
-				var entityPos = [colEntitys[i].PosX+(EntityList[i].width/2),colEntitys[i].PosY+(colEntitys[i].height/2)];
+				var entityPos = [colEntitys[i].PosX+(colEntitys[i].width/2),colEntitys[i].PosY+(colEntitys[i].height/2)];
 				var dx = entityPos[0]-ourPos[0];
 				var dy = entityPos[1]-ourPos[1];
 				var amount = Math.sqrt((dx*dx)+(dy*dy));
@@ -32,7 +33,7 @@ var EntityReactor = Entity.extend({
 				colEntitys[i].radiate(this, amount);
 			}
 		} else if(this.world.state == State.RADIATION_CLEARED) {
-			var colEntitys = world.getCollidingEntitiesShape(this.getRadiationHitbox());
+			var colEntitys = this.world.getCollidingEntitiesShape(this.getRadiationHitbox());
 			var foundPlayer = false;
 			for(var i = 0; i < colEntitys.length; i++) {
 				if(colEntitys[i] instanceof EntityPlayer) {
@@ -65,17 +66,24 @@ var EntityReactor = Entity.extend({
 	},
     
     getRadiationHitbox : function() {
-		return [this.PosX,this.PosY,(this.radiationImage.width * this.radiation * 3 / 2)];
+		var width = this.radiationImage.width;
+		if(this.radiation != 0)
+			width *= this.radiation * 3;
+		else
+			width *= 3;
+		
+		return [this.PosX, this.PosY, (width / 2)];
     },
 	
-	render : function(Delta) {
-		var x = this.PosX;
-		var y = this.PosY;
+	render : function() {
 		ctx.save();
-		ctx.translate(x,y);
-		ctx.scale(this.radiation * 3 + this.radiationPulse, this.radiation * 3 + this.radiationPulse);
-		ctx.drawImage(this.radiationImage,-(this.radiationImage.width/2),(-(this.radiationImage.height/2))-BackgX);
+		var scale = (this.radiation * 3) + this.radiationPulse;
+		ctx.scale(scale, scale);
+		ctx.drawImage(this.radiationImage,
+					  (this.PosX-(this.radiationImage.width/2*scale)-this.world.game.camera.CameraX)/scale,
+					  (this.PosY-(this.radiationImage.height/2*scale))/scale);
 		ctx.restore();
+		
 	},
     
 	ignoreCollision : function() {

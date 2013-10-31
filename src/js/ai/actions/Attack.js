@@ -13,7 +13,7 @@ var Attack = OpposingEntityInVicinityAction.extend({
 	performAction : function(entity) {
 		if (!this.shouldAnimateAttack() && this.isOnCooldown()) return;
 		
-		if (!this.executing && (!this.shouldAnimateAttack() || entity.isReadyForAttack())) {
+		if (!this.executing && (!this.shouldAnimateAttack() || entity.isReadyForAttack)) {
 			this.executing = true;
 			this.lastAttack = new Date().getTime();
 			entity.horizontalSpeed = 0;

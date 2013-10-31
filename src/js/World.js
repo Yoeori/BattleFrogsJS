@@ -107,10 +107,10 @@ var World = Class.extend({
 		}
 		for(var i=0; i < this.entities.length; i++) {
 			ctx.strokeStyle="#FFF";
-			ctx.strokeRect(this.entities[i].PosX  - camera.CameraX, 
-						   this.entities[i].PosY,
-						   this.entities[i].width,
-						   this.entities[i].height);
+			ctx.strokeRect(this.entities[i].frameSize[0]  - camera.CameraX, 
+						   this.entities[i].frameSize[1],
+						   this.entities[i].frameSize[2],
+						   this.entities[i].frameSize[3]);
 		}
 	},
 	
@@ -188,7 +188,7 @@ var World = Class.extend({
 	
 	hasPirates : function() {
 		for(var i = 0; i < this.entities.length; i++) {
-			if(this.entities[i] instanceof Humanoid && this.entities[i].team == Team.THE_FROG_PIRATES) {
+			if(this.entities[i] instanceof EntityHumanoid && this.entities[i].team == Team.THE_FROG_PIRATES) {
 				return true;
 			}
 		}
@@ -199,9 +199,12 @@ var World = Class.extend({
 		var result = 0;
 		var bestDist = 0;
 		for(var i = 0; i < this.entities.length; i++) {
-			if (this.entities[i].team != team) continue;
-			if (this.entities[i] instanceof EntityHumanoid || this.entities[i] instanceof EntityPlayer) {
-				var center = [(this.entities[i].PosX+this.entities[i].width/2),(this.entities[i].PosY-this.entities[i].height/2)];
+			if(this.entities[i].team != team) continue;
+			if(this.entities[i] instanceof EntityHumanoid || 
+			   this.entities[i] instanceof EntityPlayer ||
+			   this.entities[i] instanceof EntityHumanoidEnemy ||
+			   this.entities[i] instanceof EntityHumanoidEnemyFrogPirate) {
+				var center = [(this.entities[i].PosX+this.entities[i].width/2),(this.entities[i].PosY+this.entities[i].height/2)];
 				var dist = distanceSquared(center,target);
 				if (result == 0 || dist < bestDist) {
 					bestDist = dist;

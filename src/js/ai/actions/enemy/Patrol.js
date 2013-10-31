@@ -12,7 +12,7 @@ var Patrol = Attack.extend({
 		if(Math.abs(entity.horizontalSpeed) != this.patrolSpeed) {
 			this.resumePatrol(entity);
 		} else {
-			if(this.hasReachedRightEnd(entity) && this.hasReachedLeftEnd(entity)) {
+			if(this.hasReachedRightEnd(entity) || this.hasReachedLeftEnd(entity)) {
 				entity.invertHorizontalSpeed();
 			}
 		}

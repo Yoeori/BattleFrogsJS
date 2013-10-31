@@ -44,10 +44,6 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 		this._super(delta);
 	},
 	
-	isReadyForAttack : function() {
-		return this.isReadyForAttack;
-	},
-	
 	cycleAttackAnimation : function() {},
 	
 	stopAttackAnimation : function() {},
@@ -57,7 +53,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 	canAttack : function() {
 		for(var i = 0; i < this.behaviors.length; i++) {
 			var action = this.behaviors[i].action;
-			if(action instanceof Attack && action.shouldAnimateAttack() && action.isConditionMet(this))
+			if(action instanceof TongueAttack && action.shouldAnimateAttack() && action.isConditionMet(this))
 				return true;
 		}
 		return false;
