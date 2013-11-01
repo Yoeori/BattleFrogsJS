@@ -1,45 +1,48 @@
 var Entity = Class.extend({
 	
-	velocityY: 0,
-	velocityX: 0,
-	PosX: 0,
-	PosY: 0,
-	startingPoint: [],
-	
-	wasjumping: false,
-	jumping: false,
-	isMoving: false,
-	wasMoving: false,
-	frame: 0,
-	world: 0,
-	
-	lifestart: 0,
-	horizontalSpeed: 0,
-	flying: false,
-	friction: 0.35,
-	jumpSpeed: 22.5,
-	gravity: 0.75,
-	animationSheet: new Image(),
-	team: 0,
-	height : 0,
-	width : 0,
-	
 	FACING_LEFT : 0,
     FACING_RIGHT : 1,
-	facing: 0,
 	
-	//Health and stuff
-	fullHealth: 100,
-	currentHealth: 100,
-	damageModifier: 1,
-	invulnerable: false,
+	world: 0,
+	animationSheet : new Image(),
+	startingPoint : [],
+	frameSize : [],
+	PosX : 0,
+	PosY : 0,
+	velocityY : 0,
+	velocityX : 0,
+	horizontalSpeed : 0,
+	gravity : 0.75,
+	jumpSpeed : 22.5,
+	friction : 0.35,
+	isMoving : false,
+	jumping : false,
+	flying : false,
+	frame : 0,
+	lifeStart : 0,
+	facing : 0,
+	wasjumping : false,
+	wasMoving : false,
+	team : 0,
 	
-	inversegravity : false,
+	fullHealth : 100,
+	currentHealth : 100,
+	damageModifier : 1,
+	invulnerable : false,
+	
+	height : 0,
+	width : 0,
 	RenderDiff : false,
 	
 	instance : "Entity",
 	
 	init : function(world, image, startingPoint, width, height, team) {
+		
+		if(arguments.length == 1) { //Save
+			this.world = world;
+			return;
+		}
+		
 		this.animationSheet = image;
 		this.team = team;
 		this.world = world;
@@ -47,6 +50,7 @@ var Entity = Class.extend({
 		this.PosX = startingPoint[0];
 		this.PosY = startingPoint[1];
 		this.startingPoint = startingPoint;
+		this.frameSize = startingPoint;
 		this.width = width;
 		this.height = height;
 	},
@@ -173,7 +177,7 @@ var Entity = Class.extend({
 	},
 	
 	isIntersecting : function(otherEntity) {
-        return this.width > otherEntity.PosX && this.PosX < (otherEntity.width+otherEntity.PosX) && this.height > (otherEntity.PosY-otherEntity.height) && this.PosY < otherEntity.PosY;
+        return intersects(this.getPosition(), otherEntity.getPosition());
     },
 	
 	deltaX : function(otherEntity) {
@@ -211,7 +215,7 @@ var Entity = Class.extend({
 	},
 	
 	deltaYEnt : function(DeltaYEntentity) {
-		this.DeltaY(DeltaYEntentity.getPosition());
+		return this.deltaY(DeltaYEntentity.getPosition());
 	},
 	
 	deltaY : function(DeltaYRect) {
@@ -238,8 +242,8 @@ var Entity = Class.extend({
 	},
 	
 	canContinueMoving : function() {
-		newX = this.PosX + this.velocityX;
-		return !checkCollision(newX, this.PosX, this.width, this.height, false);
+		var newX = this.PosX + this.horizontalSpeed;
+		return !this.world.isCollision(this, this.getCollisionHitbox([newX, this.PosX, this.width, this.height]), false);
 	},
 	
 	invertHorizontalSpeed : function() {
@@ -315,5 +319,11 @@ var Entity = Class.extend({
 		ReturnSave["horizontalSpeed"] = this.horizontalSpeed;
 		ReturnSave["facing"] = this.facing;
 		return ReturnSave;
+	},
+	
+	saveRestore : function(GetSave) {
+		for(i in GetSave) {
+			this[i] = GetSave[i];
+		}
 	}
 });

@@ -5,13 +5,12 @@ var EntityProjectileMissile = EntityProjectile.extend({
 	
 	instance : "EntityProjectileMissile",
 	
-	init : function(world, origin) {
-		this._super(world, sml["missile"], origin, 60, 29, 500, 25);
+	init : function(origin, attack) {
+		this._super(sml["missile"], origin, attack, 60, 29, 500, 25);
 		this.horizontalSpeed = this.facing == this.FACING_RIGHT ? this.SPEED : -this.SPEED;
 	},
 	
 	die : function() {
-		//Create explosion and shizzle (not yet implemented)
 		var point = [this.facing == this.FACING_LEFT ? this.PosX : this.PosX+this.width, this.PosY+this.height/2];
 		this.world.addEntity(new EntityExplosion(this.world, point, 0));
 		this._super();

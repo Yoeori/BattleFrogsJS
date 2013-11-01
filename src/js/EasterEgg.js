@@ -16,12 +16,12 @@ var EasterEgg = Class.extend({
 		this.height = 108;
 		
 		this.image = sml["splodinkittensheet"];
-		this.animation = new Animation(0, framecount, y, 166);
+		this.animation = new Animation(0, this.framecount, y, 166);
 		this.position = [568, 280];
 		
 		this.animation.start();
 		this.animation.setCurrentFrame(0);
-		this.animation.stopAt = 0;
+		this.animation.stopAt = this.framecount;
 	},
 	
 	update : function(delta) {
@@ -34,14 +34,13 @@ var EasterEgg = Class.extend({
 	
 	render : function() {
 		curFrame = this.animation.getCurrentFrame();
-		
 		ctx.drawImage(this.image,
 					  this.width*curFrame[1],
 					  this.height*curFrame[0],
 					  this.width,
 					  this.height,
-					  this.PosX,
-					  this.PosY,
+					  this.position[0],
+					  this.position[1],
 					  this.width,
 					  this.height);
 	}

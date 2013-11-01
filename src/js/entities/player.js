@@ -27,6 +27,8 @@ var EntityPlayer = Entity.extend({
 	
 	instance : "EntityPlayer",
 	
+	playerAttack : 0,
+	
 	init: function(world, image, width, height) {
 		this._super(world, image, [this.STARTING_X, world.FLOOR_LEVEL-height], width, height, Team.THE_FRENCH);
 		this.horizontalSpeed = 8;
@@ -40,6 +42,7 @@ var EntityPlayer = Entity.extend({
 		this.animations[this.ANIMATION_TYPE_ATTACK].loop = false;
 		this.animations[this.ANIMATION_TYPE_JUMP].pingPong = true;
 		
+		this.playerAttack = new PlayerAttack(Team.THE_FRENCH, 50, this.animationframerate[this.ANIMATION_TYPE_ATTACK] * this.animate[this.ANIMATION_TYPE_ATTACK]);
 	},
 	
 	update : function(Delta) {
@@ -66,7 +69,7 @@ var EntityPlayer = Entity.extend({
 				this.PosX -= 48;
 				this.isLeftShooting = true;
 			}
-			this.world.addEntity(new EntityProjectileMissile(this.world, this));
+			this.world.addEntity(new EntityProjectileMissile(this, this.playerAttack));
 			this.hasAttackHappened = true;
 			
 		}
@@ -104,9 +107,10 @@ var EntityPlayer = Entity.extend({
 			this.animations[this.animType].stopAt = this.animate[this.animType];
 		}
 		
-		if (Date.now() - this.lastAutoHeal > 10000) {
+		this.lastAutoHeal -= Delta;
+		if (this.lastAutoHeal < 0) {
 			this.increaseHealth(1);
-			this.lastAutoHeal = Date.now();
+			this.lastAutoHeal = 10000;
 		}
 		
 		this.playWalkingSound();

@@ -19,6 +19,8 @@ var BattleToads = Class.extend({
 	world : 0,
 	rift : 0,
 	
+	intactBakeryDoorForeground : 0,
+	
 	init : function() {
         this.keyboard = new Input();
 		this.camera = new Camera(this,[this.GAME_WIDTH, this.GAME_HEIGHT]);
@@ -68,6 +70,9 @@ var BattleToads = Class.extend({
 		
 		if(this.screen != 0 && this.paused != true) 
 			this.screen.update(deltaTime);
+		
+		if(this.paused)
+			this.startTime += deltaTime;
 	},
 	
 	render : function() {
@@ -120,42 +125,29 @@ var BattleToads = Class.extend({
 			
 			this.loadCollisions();
 			
-			var Door_1 = EntityObstacleDoor.extend({
-				onDestroyed : function() {
-					this.world.setState(State.CRYO_DOOR_BLOWN);
-					this.world.addForegroundObject(new ForegroundObject(sml["IntoRift_door_Broken"], [6030, 0], 313, 720));
-				}
-			});
 			this.world.addEntity(new Door_1(this.world, sml["IntoRift_door_Intact"], [6030, 0], 313, 720, [6130, 400, 120, 320]));
 			
-			var intactBakeryDoorForeground = new ForegroundObject(sml["BakeryWall_door_Intact"], [11375, 0], 306, 720);	
-			var Door_2 = EntityObstacleDoor.extend({
-				onDestroyed : function() {
-					this.world.removeForegroundObject(intactBakeryDoorForeground);
-					this.world.addForegroundObject(new ForegroundObject(sml["BakeryWall_door_Broken"], [11375, 0], 306, 720));
-				}
-			});
+			this.intactBakeryDoorForeground = new ForegroundObject(sml["BakeryWall_door_Intact"], [11375, 0], 306, 720);
+			
 			this.world.addEntity(new Door_2(this.world, sml["BakeryWall_door_Intact"], [11375, 0], 306, 720, [11375, 400, 120, 320]));
 			
-			var Door_3 = EntityObstacleDoor.extend({
-				onDestroyed : function() {
-					this.world.addForegroundObject(new ForegroundObject(sml["Reactor_door_Broken"], [2135, 0], 502, 720));
-				}
-			});
 			this.world.addEntity(new Door_3(this.world, sml["Reactor_door_Intact"], [2135, 0], 502, 720, [2135, 400, 120, 320]));
 			
 			this.world.addEntity(this.player);
+			this.rift = new EntityRift(this.world, [2805, 76], 2260, 4350);
+			this.world.addEntity(this.rift);
+			
 			this.world.addEntity(new EntityPickupCroissant(this.world, [10616, 449]));
+			var reactor = new EntityReactor(this.world, [456, 307]);
+			this.world.addEntity(reactor);
 			this.world.addEntity(new EntityPickupWeapon(this.world, [14000, 430]));
 			
-			//this.world.addFrogPirate([9800, 652]);
-			//this.world.addFrogPirate([11031, 630]);
-			//this.world.addFrogPirate([12022, 648]);
-			
-			
+			this.world.addFrogPirate([9800, 652]);
+			this.world.addFrogPirate([11031, 630]);
+			this.world.addFrogPirate([12022, 648]);
 			
 			this.world.addForegroundObject(new ForegroundObject(sml["LeaveCryo_Door_Broken"], [8040, 0], 211, 720));
-			this.world.addForegroundObject(intactBakeryDoorForeground);
+			this.world.addForegroundObject(this.intactBakeryDoorForeground);
 			
 			this.setScreen(new ScreenText(this, "Use WASD/Arrow keys to move and jump. Yay"));
 		}
@@ -168,6 +160,7 @@ var BattleToads = Class.extend({
 		} else if(this.world.state == State.GAME_OVER) {
 			this.setScreen(new ScreenDeath(this));
 		} else if(this.world.state == State.CRYO_DOOR_BLOWN) {
+			this.rift.open();
 			this.setScreen(new ScreenText(this, "There is a breach in the reactor room. Hurry!"));
 		} else if(this.world.state == State.RADIATION_CLEARED) {
 			this.setScreen(new ScreenText(this, "The radiation is gone. Get to the console and turn on the engines!"));

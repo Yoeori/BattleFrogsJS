@@ -13,7 +13,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 	},
 	
 	update : function(delta) {
-		/*this.wasAttacking = this.isAttacking;
+		this.wasAttacking = this.isAttacking;
 		var cycledAttack = false;
 		var attackDelta = Date.now() - this.attackStart;
 		this.isReadyForAttack = false;
@@ -39,13 +39,9 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 			this.stopAttackAnimation();
 		} else if(cycledAttack && this.isAttacking) {
 			this.cycleAttackAnimation();
-		}*/
+		}
 		
 		this._super(delta);
-	},
-	
-	isReadyForAttack : function() {
-		return this.isReadyForAttack;
 	},
 	
 	cycleAttackAnimation : function() {},
@@ -57,7 +53,7 @@ var EntityHumanoidEnemy = EntityHumanoid.extend({
 	canAttack : function() {
 		for(var i = 0; i < this.behaviors.length; i++) {
 			var action = this.behaviors[i].action;
-			if(action instanceof Attack && action.shouldAnimateAttack() && action.isConditionMet(this))
+			if(action instanceof TongueAttack && action.shouldAnimateAttack() && action.isConditionMet(this))
 				return true;
 		}
 		return false;

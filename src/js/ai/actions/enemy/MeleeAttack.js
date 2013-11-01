@@ -18,7 +18,7 @@ var MeleeAttack = Attack.extend({
 			target.decreaseHealth(this.damage);
 		}
 		
-		this.setExecuting(false);
+		this.executing = false;
 	},
 	
 	isConditionMet : function(entity) {

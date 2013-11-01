@@ -31,7 +31,7 @@ var EntityHumanoidEnemyFrogPirate = EntityHumanoidEnemy.extend({
 		this.addBehavior(new Behavior(5, new StalkEntity(opposingTeam, this.STALKING_SPEED)));
 		this.guardPoint = guardPoint;
 		this.addBehavior(new Behavior(25, new ReturnToGuardPoint(this.guardPoint, 12)));
-		this.addBehavior(new Behavior(50, new Patrol(4, 400)));
+		//this.addBehavior(new Behavior(50, new Patrol(4, 400)));
 		
 	},
 	
@@ -98,11 +98,11 @@ var EntityHumanoidEnemyFrogPirate = EntityHumanoidEnemy.extend({
 	radiate : function(reactor, radiation) {
 		if(this.world.getNumberOfBosses() == 0) {
 			reactor.shrinkRadiation();
-			this.world.setNumberOfBosses(1);
+			//this.world.setNumberOfBosses(1);
 			
 			this.die();
 			
-			this.world.addEntity(); //TODO
+			//this.world.addEntity(); //TODO
 		}
 	},
 	
