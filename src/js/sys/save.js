@@ -39,6 +39,8 @@ var Save = Class.extend({
 		}
 		
 		//Foreground
+		
+		//Obstacles
 
 		//Get screen save
 		if(SaveObject.screen != 0) {
@@ -64,7 +66,18 @@ var Save = Class.extend({
 		localStorage.setItem("BattleFrogs_Game", JSON.stringify(newSave));
 	},
 	
-	saveRestore : function() {
+	saveRestore : function(SaveObject) {
+		var resSave = JSON.parse(localStorage["BattleFrogs_Game"]);
+		
+		//Set game
+		SaveObject.startTime = resSave["game"]["startTime"];
+		
+		//Set world
+		SaveObject.world.collisions = resSave["game"]["world"]["collisions"];
+		SaveObject.world.lastEasterEggSpawn = resSave["game"]["world"]["lastEasterEggSpawn"];
+		SaveObject.world.numberOfBosses = resSave["game"]["world"]["numberOfBosses"];
+		SaveObject.world.state = resSave["game"]["world"]["state"];
+		
 		
 	}
 	
