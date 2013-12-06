@@ -33,6 +33,7 @@ loadimages = new Array(	new Array("bg","bg"),
 					    "gameover",
 					    "explosion_tadpole",
 					    "explosion_splatter",
+					    "tadpole",
 					   
 					   	// Enemys
 					    "frog_normal",

@@ -55,7 +55,7 @@ var Entity = Class.extend({
 		this.height = height;
 	},
 	
-	render : function() {
+	render : function(shouldnotsave) {
 		this.frame++;
 		
 		var curFrame = this.getFrame();
@@ -71,7 +71,7 @@ var Entity = Class.extend({
 								 this.width,								// Width to display
 								 this.height);								// Height to display
 		} else {
-			ctx.save();
+			if(!shouldnotsave) ctx.save();
 			ctx.translate(this.width, 0);
 			ctx.scale(-1, 1);
 			ctx.drawImage(this.animationSheet, 
@@ -83,7 +83,7 @@ var Entity = Class.extend({
 								 this.PosY, 
 								 this.width, 
 								 this.height);
-			ctx.restore();
+			if(!shouldnotsave) ctx.restore();
 		}
 	},
 	
